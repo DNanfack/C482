@@ -10,8 +10,8 @@ public class Inventory {
      * Constructor
      */
     public Inventory() {
-        products = new ArrayList<>();
-        allParts = new ArrayList<>();
+        this.products = new ArrayList<>();
+        this.allParts = new ArrayList<>();
     }
 
     // ************ METHODS *************************
@@ -22,10 +22,12 @@ public class Inventory {
 
     public boolean removeProduct(int productID) {
         //TODO: Create method
+        return false;
     }
 
     public Product lookupProduct(int productID) {
         //TODO: Create method
+        return null;
     }
 
     public void updateProduct(int productID) {
@@ -38,10 +40,12 @@ public class Inventory {
 
     public boolean deletePart(Part part) {
         //TODO: Create method
+        return false;
     }
 
     public Part lookupPart(int partID) {
         //TODO: Create method
+        return null;
     }
 
     public void updatePart(int partID) {
