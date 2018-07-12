@@ -1,11 +1,14 @@
 package C482.View_Controller;
 
+import C482.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 
 public class RootLayoutController {
+    private Main main;
+
     @FXML
     private MenuItem fileCloseMenuItem;
 
@@ -13,6 +16,10 @@ public class RootLayoutController {
     @FXML
     public void handleClose(ActionEvent event) {
         System.exit(0);
+    }
+
+    public void setMain(Main main) {
+        this.main = main;
     }
 
     /**

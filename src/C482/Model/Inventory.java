@@ -17,34 +17,58 @@ public class Inventory {
     // ************ METHODS *************************
 
     public void addProduct(Product product) {
-        //TODO: Create Method
+        products.add(product);
     }
 
+    /**
+     * Searches for productID in products list and removes it if it finds it
+     * @param productID ID of product to remove
+     * @return Returns true if successfully removed, false if not found.
+     */
     public boolean removeProduct(int productID) {
-        //TODO: Create method
+        // For each item in products ArrayList
+        for(int i = 0; i < products.size(); i++) {
+            // If productID exists in array
+            if(products.get(i).getProductID() == productID) {
+                products.remove(i);
+                return true;
+            }
+        }
         return false;
     }
 
     public Product lookupProduct(int productID) {
-        //TODO: Create method
+        for(int i = 0; i < products.size(); i++) {
+            Product p = products.get(i);
+            if(p.getProductID() == productID) {
+                return p;
+            }
+        }
         return null;
     }
 
     public void updateProduct(int productID) {
-        //TODO: Create method
+        Product p = lookupProduct(productID);
+        if(p != null){
+            p.setProductID(productID);
+        }
     }
 
     public void addPart(Part part) {
-        //TODO: Create method
+        allParts.add(part);
     }
 
     public boolean deletePart(Part part) {
-        //TODO: Create method
-        return false;
+        return allParts.remove(part);
     }
 
     public Part lookupPart(int partID) {
-        //TODO: Create method
+        for(int i = 0; i < allParts.size(); i++) {
+            Part p = allParts.get(i);
+            if(p.getPartID() == partID) {
+                return p;
+            }
+        }
         return null;
     }
 

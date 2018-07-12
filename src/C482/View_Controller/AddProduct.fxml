@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C482.View_Controller.AddProductController">
+<AnchorPane prefHeight="575.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C482.View_Controller.AddProductController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -85,7 +85,7 @@
                      <children>
                         <VBox prefHeight="519.0" prefWidth="734.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane prefHeight="266.0" prefWidth="747.0">
+                              <AnchorPane prefHeight="226.0" prefWidth="747.0">
                                  <children>
                                     <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <top>
@@ -100,7 +100,7 @@
                                           </HBox>
                                        </top>
                                        <bottom>
-                                          <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                          <ButtonBar prefHeight="40.0" prefWidth="737.0" BorderPane.alignment="CENTER">
                                             <buttons>
                                               <Button mnemonicParsing="false" text="Add" />
                                             </buttons>
@@ -110,9 +110,9 @@
                                           </ButtonBar>
                                        </bottom>
                                        <center>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                          <AnchorPane prefHeight="296.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView prefHeight="180.0" prefWidth="747.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <columns>
                                                     <TableColumn prefWidth="195.0" text="Part ID" />
                                                     <TableColumn prefWidth="195.0" text="Part Name" />
@@ -126,7 +126,7 @@
                                     </BorderPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                              <AnchorPane prefHeight="181.0" prefWidth="747.0">
                                  <children>
                                     <BorderPane prefHeight="249.0" prefWidth="747.0" AnchorPane.bottomAnchor="-49.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <top>
@@ -143,7 +143,7 @@
                                        <bottom>
                                           <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <buttons>
-                                                <Button mnemonicParsing="false" text="Delete" />
+                                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Delete" />
                                              </buttons>
                                              <BorderPane.margin>
                                                 <Insets right="10.0" />
@@ -151,9 +151,9 @@
                                           </ButtonBar>
                                        </bottom>
                                        <center>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                          <AnchorPane prefHeight="145.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView prefHeight="200.0" prefWidth="747.0" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <columns>
                                                       <TableColumn prefWidth="189.0" text="Part ID" />
                                                       <TableColumn prefWidth="189.0" text="Part Name" />
@@ -190,8 +190,8 @@
          <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
-                <Button mnemonicParsing="false" text="Save" />
-                  <Button mnemonicParsing="false" text="Cancel" />
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Save" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showMainScreen" text="Cancel" />
               </buttons>
                <padding>
                   <Insets right="10.0" />
