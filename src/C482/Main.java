@@ -43,7 +43,7 @@ public class Main extends Application {
         // this.primaryStage.setTitle("C482 Project");
 
         initRootLayout();
-        showMainScreen(0);
+        showMainScreen("parts");
     }
 
     /**
@@ -67,17 +67,15 @@ public class Main extends Application {
     /**
      * Shows MainScreen inside the RootLayout
      */
-    public void showMainScreen(int tabNumber) throws IOException {
+    public void showMainScreen(String tabName) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("View_Controller/MainScreen.fxml"));
-        TabPane tabPane = new TabPane();
-        tabPane.getSelectionModel().select(tabNumber);
         AnchorPane mainScreen = loader.load();
         rootLayout.setCenter(mainScreen);
 
         MainScreenController controller = loader.getController();
         controller.setMain(this);
-
+        controller.selectTab(tabName);
 
     }
 

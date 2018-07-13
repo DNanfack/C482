@@ -8,6 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -18,6 +21,12 @@ import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
     private Main main;
+    @FXML
+    TabPane tabPane;
+    @FXML
+    Tab partsTab;
+    @FXML
+    Tab productsTab;
 
     public void setMain(Main main) {
         this.main = main;
@@ -29,6 +38,21 @@ public class MainScreenController implements Initializable {
 
     public void showAddProduct() throws IOException {
         main.showAddProduct();
+    }
+
+    public void selectTab(String tab) {
+        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+        switch (tab) {
+            case "parts":
+                selectionModel.select(partsTab);
+                break;
+            case "products":
+                selectionModel.select(productsTab);
+                break;
+            default:
+                selectionModel.select(1);
+                break;
+        }
     }
 
     @Override

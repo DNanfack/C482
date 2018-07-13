@@ -16,7 +16,7 @@ public class AddProductController implements Initializable {
     }
 
     public void showMainScreen(ActionEvent event) throws IOException {
-        main.showMainScreen(1);
+        main.showMainScreen("products");
     }
 
     @Override

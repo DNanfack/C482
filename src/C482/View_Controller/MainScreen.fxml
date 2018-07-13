@@ -28,9 +28,9 @@
             </Label>
          </top>
          <center>
-            <TabPane prefHeight="313.0" prefWidth="608.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane fx:id="tabPane" prefHeight="313.0" prefWidth="608.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                <Tab text="Parts">
+                <Tab fx:id="partsTab" text="Parts">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -70,7 +70,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Products">
+                <Tab fx:id="productsTab" text="Products">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>

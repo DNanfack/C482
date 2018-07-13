@@ -21,7 +21,7 @@ public class AddPartController implements Initializable {
     }
 
     public void showMainScreen(ActionEvent event) throws IOException {
-        main.showMainScreen(0);
+        main.showMainScreen("parts");
     }
 
     @Override
