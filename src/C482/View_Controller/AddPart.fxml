@@ -26,7 +26,7 @@
                         <Font name="System Font" size="24.0" />
                      </font>
                   </Label>
-                  <RadioButton mnemonicParsing="false" prefHeight="49.0" prefWidth="148.0" text="In-House">
+                  <RadioButton fx:id="inHouseRadio" mnemonicParsing="false" onAction="#showInHouseField" prefHeight="49.0" prefWidth="148.0" text="In-House">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -34,7 +34,7 @@
                         <ToggleGroup fx:id="addPartRadioGroup" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" prefHeight="49.0" prefWidth="148.0" text="Outsourced" toggleGroup="$addPartRadioGroup">
+                  <RadioButton fx:id="outsourcedRadio" mnemonicParsing="false" onAction="#showOutsourcedField" prefHeight="49.0" prefWidth="148.0" text="Outsourced" toggleGroup="$addPartRadioGroup">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -46,15 +46,16 @@
             </HBox>
          </top>
          <center>
-            <GridPane prefHeight="350.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="partGridPane" prefHeight="350.0" prefWidth="600.0" BorderPane.alignment="CENTER">
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="193.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="408.0" minWidth="10.0" prefWidth="407.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="566.0" minWidth="10.0" prefWidth="418.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="556.0" minWidth="10.0" prefWidth="556.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -66,12 +67,14 @@
                   <Label text="Price/Cost" GridPane.rowIndex="3" />
                   <Label text="Max" GridPane.rowIndex="4" />
                   <Label text="Min" GridPane.rowIndex="5" />
-                  <TextField editable="false" prefHeight="27.0" prefWidth="169.0" promptText="Auto Generated" GridPane.columnIndex="1" />
-                  <TextField promptText="Part Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField editable="false" prefHeight="27.0" prefWidth="591.0" promptText="Auto Generated" GridPane.columnIndex="1" />
+                  <TextField fx:id="partNameTextField" promptText="Part Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="inventoryTextField" promptText="Total in Inventory" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="priceCostTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="maxTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="minTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label fx:id="optionalRowLabel" GridPane.rowIndex="6" />
+                  <TextField fx:id="optionalRowTextfield" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
                <BorderPane.margin>
                   <Insets />
@@ -84,8 +87,8 @@
          <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Save" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showMainScreen" text="Cancel" />
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showValuesAndChange" text="Save" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel" />
               </buttons>
                <BorderPane.margin>
                   <Insets right="10.0" />
