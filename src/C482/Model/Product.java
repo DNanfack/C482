@@ -56,10 +56,6 @@ public class Product {
         return null;
     }
 
-    public void setAssociatedParts(ArrayList<Part> associatedParts) {
-        this.associatedParts = associatedParts;
-    }
-
     public void setProductID(int productID) {
         this.productID.set(productID);
     }
