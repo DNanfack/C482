@@ -1,22 +1,24 @@
 package C482.Model;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class InhousePart extends Part{
-    private int machineID;
+    private final IntegerProperty machineID;
 
     /**
      * Constructor
-     * @param machineID Machine ID
      */
-    public InhousePart(int machineID) {
+    public InhousePart() {
         super();
-        this.machineID = machineID;
+        this.machineID = new SimpleIntegerProperty();
     }
 
     public void setMachineID(int machineID) {
-        this.machineID = machineID;
+        this.machineID.set(machineID);
     }
 
     public int getMachineID() {
-        return this.machineID;
+        return this.machineID.getValue();
     }
 }

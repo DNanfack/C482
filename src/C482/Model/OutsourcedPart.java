@@ -1,22 +1,24 @@
 package C482.Model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class OutsourcedPart extends Part {
-    private String companyName;
+    private final StringProperty companyName;
 
     /**
      * Constructor
-     * @param companyName Company Name
      */
-    public OutsourcedPart(String companyName) {
+    public OutsourcedPart() {
         super();
-        this.companyName = companyName;
+        this.companyName = new SimpleStringProperty();
     }
 
     public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+        this.companyName.set(companyName);
     }
 
     public String getCompanyName() {
-        return this.companyName;
+        return this.companyName.getValue();
     }
 }

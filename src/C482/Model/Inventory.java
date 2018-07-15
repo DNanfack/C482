@@ -1,17 +1,20 @@
 package C482.Model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public class Inventory {
-    private ArrayList<Product> products;
-    private ArrayList<Part> allParts;
+    private ObservableList<Product> products;
+    private ObservableList<Part> allParts;
 
     /**
      * Constructor
      */
     public Inventory() {
-        this.products = new ArrayList<>();
-        this.allParts = new ArrayList<>();
+        this.products = FXCollections.observableArrayList();
+        this.allParts = FXCollections.observableArrayList();
     }
 
     // ************ METHODS *************************

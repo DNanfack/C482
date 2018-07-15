@@ -1,29 +1,39 @@
 package C482.Model;
 
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public class Product {
-    private ArrayList<Part> associatedParts;
-    private int productID;
-    private String name;
-    private double price;
-    private int inStock;
-    private int min;
-    private int max;
+    private ObservableList<Part> associatedParts;
+    private final IntegerProperty productID;
+    private final StringProperty name;
+    private final DoubleProperty price;
+    private final IntegerProperty inStock;
+    private final IntegerProperty min;
+    private final IntegerProperty max;
 
     /**
      * Constructor
      */
     public Product() {
-        //TODO: Write constructor
+        this.associatedParts = FXCollections.observableArrayList();
+        this.productID = new SimpleIntegerProperty();
+        this.name = new SimpleStringProperty();
+        this.price = new SimpleDoubleProperty();
+        this.inStock = new SimpleIntegerProperty();
+        this.min = new SimpleIntegerProperty();
+        this.max = new SimpleIntegerProperty();
     }
 
     /**
      * Takes a part and adds it to product
-     * @param part
+     * @param part part to add to the list
      */
     public void addAssociatedPart(Part part){
-        //TODO: Write method
+        associatedParts.add(part);
     }
 
     /**
@@ -51,54 +61,50 @@ public class Product {
     }
 
     public void setProductID(int productID) {
-        this.productID = productID;
+        this.productID.set(productID);
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.price.set(price);
     }
 
     public void setInStock(int inStock) {
-        this.inStock = inStock;
+        this.inStock.set(inStock);
     }
 
     public void setMin(int min) {
-        this.min = min;
+        this.min.set(min);
     }
 
     public void setMax(int max) {
-        this.max = max;
-    }
-
-    public ArrayList<Part> getAssociatedParts() {
-        return associatedParts;
+        this.max.set(max);
     }
 
     public int getProductID() {
-        return productID;
+        return productID.getValue();
     }
 
     public String getName() {
-        return name;
+        return name.getValue();
     }
 
     public double getPrice() {
-        return price;
+        return price.getValue();
     }
 
     public int getInStock() {
-        return inStock;
+        return inStock.getValue();
     }
 
     public int getMin() {
-        return min;
+        return min.getValue();
     }
 
     public int getMax() {
-        return max;
+        return max.getValue();
     }
 }

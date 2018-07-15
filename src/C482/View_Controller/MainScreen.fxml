@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C482.View_Controller.MainScreenController">
@@ -38,6 +39,15 @@
                                  <top>
                                     <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                                        <children>
+                                          <Label text="Parts Management" textFill="#37c271">
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                                           <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="23.0" prefWidth="61.0" text="Search" />
                                           <TextField promptText="Enter Part ID" />
                                        </children>
@@ -78,6 +88,15 @@
                                  <top>
                                     <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                                        <children>
+                                          <Label text="Product Managemnt" textFill="#37c271">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <padding>
+                                                <Insets left="10.0" />
+                                             </padding>
+                                          </Label>
+                                          <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                                           <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="23.0" prefWidth="61.0" text="Search" />
                                           <TextField promptText="Enter Part ID" />
                                        </children>
