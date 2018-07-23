@@ -87,7 +87,7 @@
          <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showValuesAndChange" text="Save" />
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveButtonPressed" text="Save" />
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel" />
               </buttons>
                <BorderPane.margin>

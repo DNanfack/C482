@@ -90,6 +90,27 @@ public class AddPartController implements Initializable {
         //TODO: Add validation
     }
 
+    public void saveButtonPressed() {
+        // if any fields are empty, underline field.
+        if(partNameTextField.getText().isEmpty()) {
+            warningAlert("The name field is blank!");
+            partNameTextField.setStyle("-fx-border-color: red;");
+        }
+
+    }
+
+    /**
+     * Pops up an error alert with whatever message is provided.
+     * @param message String message to go into the content text of the alert box.
+     */
+    public void warningAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning!");
+        alert.setHeaderText("There may be an issue.");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         optionalRowLabel.setVisible(false);

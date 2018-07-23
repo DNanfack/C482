@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class Inventory {
     private ObservableList<Product> products;
     private ObservableList<Part> allParts;
+    private int productID;
+    private int partID;
 
     /**
      * Constructor
@@ -21,6 +23,7 @@ public class Inventory {
 
     public void addProduct(Product product) {
         products.add(product);
+        productID++;
     }
 
     /**
@@ -59,6 +62,7 @@ public class Inventory {
 
     public void addPart(Part part) {
         allParts.add(part);
+        partID++;
     }
 
     public boolean deletePart(Part part) {
@@ -73,6 +77,14 @@ public class Inventory {
             }
         }
         return null;
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    public int getPartID() {
+        return partID;
     }
 
     public void updatePart(int partID) {
