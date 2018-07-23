@@ -1,46 +1,74 @@
 package C482;
 
+import C482.Model.InhousePart;
+import C482.Model.Inventory;
+import C482.Model.Product;
 import C482.View_Controller.AddPartController;
 import C482.View_Controller.AddProductController;
 import C482.View_Controller.MainScreenController;
 import C482.View_Controller.RootLayoutController;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
+    public Inventory inventory;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        inventory = new Inventory();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("C482 Project");
-//
-//        initRootLayout();
-//
-//        showMainScreen(0);
 
+        // Add parts to product
+        Product p1 = new Product();
+        p1.setProductID(1);
+        p1.setInStock(3);
+        p1.setName("TestProduct1");
+        p1.setPrice(142.19);
+        p1.setMin(1);
+        p1.setMax(32);
+        InhousePart part1 = new InhousePart();
+        part1.setMachineID(125);
+        part1.setInStock(4);
+        part1.setName("TestPart1");
+        part1.setPrice(2.57);
+        part1.setPartID(1);
+        part1.setMin(1);
+        part1.setMax(15);
 
-        // Set root layout
-//        Parent root = FXMLLoader.load(getClass().getResource("View_Controller/RootLayout.fxml"));
-//        Scene scene = new Scene(root);
+        InhousePart part2 = new InhousePart();
+        part1.setMachineID(14);
+        part1.setInStock(5);
+        part1.setName("TestPart2");
+        part1.setPrice(1.27);
+        part1.setPartID(2);
+        part1.setMin(1);
+        part1.setMax(10);
 
-//        stage.setScene(scene);
-//        stage.show();
+        InhousePart part3 = new InhousePart();
+        part1.setMachineID(125);
+        part1.setInStock(6);
+        part1.setName("TestPart3");
+        part1.setPrice(8.63);
+        part1.setPartID(3);
+        part1.setMin(1);
+        part1.setMax(30);
 
-        // this.primaryStage = primaryStage;
-        // this.primaryStage.setTitle("C482 Project");
+        p1.addAssociatedPart(part1);
+        p1.addAssociatedPart(part2);
+        p1.addAssociatedPart(part3);
+
+        inventory.addProduct(p1);
+        inventory.addPart(part1);
+        inventory.addPart(part2);
+        inventory.addPart(part3);
 
         initRootLayout();
         showMainScreen("parts");

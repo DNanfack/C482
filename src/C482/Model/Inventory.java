@@ -90,4 +90,8 @@ public class Inventory {
     public void updatePart(int partID) {
         //TODO: Create method
     }
+
+    public ObservableList<Part> getAllParts() {
+        return this.allParts;
+    }
 }
