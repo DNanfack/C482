@@ -1,8 +1,7 @@
 package C482.View_Controller;
 
 import C482.Main;
-import C482.Model.InhousePart;
-import C482.Model.Part;
+import C482.Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,12 +22,10 @@ import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
     private Main main;
-    @FXML
-    TabPane tabPane;
-    @FXML
-    Tab partsTab;
-    @FXML
-    Tab productsTab;
+    private Inventory inventory;
+    @FXML TabPane tabPane;
+    @FXML Tab partsTab;
+    @FXML Tab productsTab;
     @FXML private TableView<Part> partTableView;
     @FXML private TableColumn<Part, String> partIDColumn;
     @FXML private TableColumn<Part, String> partNameColumn;
@@ -68,17 +65,22 @@ public class MainScreenController implements Initializable {
         partNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("inStock"));
         priceCostColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
-        InhousePart part1 = new InhousePart();
-        part1.setMachineID(125);
-        part1.setInStock(4);
-        part1.setName("TestPart1");
-        part1.setPrice(2.57);
-        part1.setPartID(1);
-        part1.setMin(1);
-        part1.setMax(15);
-        ObservableList<Part> parts = FXCollections.observableArrayList();
-        parts.add(part1);
-        partTableView.setItems(parts);
+        // Try adding an additional part
+        OutsourcedPart p = new OutsourcedPart();
+        p.setCompanyName("TaylorCompany");
+        p.setInStock(10);
+        p.setMax(70);
+        p.setMin(3);
+        p.setName("Taylor's Cool Part");
+        p.setPartID(32);
+        p.setPrice(51.21);
+        main.inventory.addPart(p);
+        partTableView.setItems(main.inventory.getAllParts());
+    }
+
+    // I don't think I'll need this.  TODO: Maybe remove
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     @Override

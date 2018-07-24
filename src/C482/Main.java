@@ -18,7 +18,7 @@ import java.io.IOException;
 public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
-    public Inventory inventory;
+    public static Inventory inventory;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -44,22 +44,22 @@ public class Main extends Application {
         part1.setMax(15);
 
         InhousePart part2 = new InhousePart();
-        part1.setMachineID(14);
-        part1.setInStock(5);
-        part1.setName("TestPart2");
-        part1.setPrice(1.27);
-        part1.setPartID(2);
-        part1.setMin(1);
-        part1.setMax(10);
+        part2.setMachineID(14);
+        part2.setInStock(5);
+        part2.setName("TestPart2");
+        part2.setPrice(1.27);
+        part2.setPartID(2);
+        part2.setMin(1);
+        part2.setMax(10);
 
         InhousePart part3 = new InhousePart();
-        part1.setMachineID(125);
-        part1.setInStock(6);
-        part1.setName("TestPart3");
-        part1.setPrice(8.63);
-        part1.setPartID(3);
-        part1.setMin(1);
-        part1.setMax(30);
+        part3.setMachineID(125);
+        part3.setInStock(6);
+        part3.setName("TestPart3");
+        part3.setPrice(8.63);
+        part3.setPartID(3);
+        part3.setMin(1);
+        part3.setMax(30);
 
         p1.addAssociatedPart(part1);
         p1.addAssociatedPart(part2);
@@ -103,6 +103,7 @@ public class Main extends Application {
 
         MainScreenController controller = loader.getController();
         controller.setMain(this);
+        // controller.setInventory(inventory);
         controller.selectTab(tabName);
 
     }
