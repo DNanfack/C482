@@ -65,16 +65,6 @@ public class MainScreenController implements Initializable {
         partNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("inStock"));
         priceCostColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
-        // Try adding an additional part
-        OutsourcedPart p = new OutsourcedPart();
-        p.setCompanyName("TaylorCompany");
-        p.setInStock(10);
-        p.setMax(70);
-        p.setMin(3);
-        p.setName("Taylor's Cool Part");
-        p.setPartID(32);
-        p.setPrice(51.21);
-        main.inventory.addPart(p);
         partTableView.setItems(main.inventory.getAllParts());
     }
 

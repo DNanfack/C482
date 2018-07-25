@@ -67,7 +67,7 @@
                   <Label text="Price/Cost" GridPane.rowIndex="3" />
                   <Label text="Max" GridPane.rowIndex="4" />
                   <Label text="Min" GridPane.rowIndex="5" />
-                  <TextField editable="false" prefHeight="27.0" prefWidth="591.0" promptText="Auto Generated" GridPane.columnIndex="1" />
+                  <TextField disable="true" prefHeight="27.0" prefWidth="591.0" text="Auto Generated" GridPane.columnIndex="1" />
                   <TextField fx:id="partNameTextField" promptText="Part Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <TextField fx:id="inventoryTextField" promptText="Total in Inventory" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="priceCostTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
