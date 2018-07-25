@@ -43,6 +43,10 @@ public class Inventory {
         return false;
     }
 
+    public boolean removePart(Part part) {
+        return allParts.remove(part);
+    }
+
     public Product lookupProduct(int productID) {
         for(int i = 0; i < products.size(); i++) {
             Product p = products.get(i);
@@ -80,11 +84,11 @@ public class Inventory {
     }
 
     public int getProductID() {
-        return productID;
+        return ++productID;
     }
 
     public int getPartID() {
-        return partID;
+        return ++partID;
     }
 
     public void updatePart(int partID) {

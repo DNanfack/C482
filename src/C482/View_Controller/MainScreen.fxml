@@ -57,8 +57,8 @@
                                     <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                       <buttons>
                                         <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showAddPart" text="Add" />
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Modify" />
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Delete" />
+                                          <Button fx:id="partModifyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" text="Modify" />
+                                          <Button fx:id="partDeleteButton" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#deletePartButtonPressed" text="Delete" />
                                       </buttons>
                                        <padding>
                                           <Insets right="10.0" />
@@ -66,7 +66,7 @@
                                     </ButtonBar>
                                  </bottom>
                                  <center>
-                                    <TableView fx:id="partTableView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                    <TableView fx:id="partTableView" onMouseClicked="#userClickedOnPartTable" prefHeight="443.0" prefWidth="958.0" BorderPane.alignment="CENTER">
                                       <columns>
                                         <TableColumn fx:id="partIDColumn" prefWidth="250.0" text="Part ID" />
                                         <TableColumn fx:id="partNameColumn" prefWidth="250.0" text="Part Name" />

@@ -57,6 +57,7 @@ public class AddPartController implements Initializable {
         inHousePart = false;
     }
 
+    //TODO: Can probably remove this.  Was used for testing.
     public void showValuesAndChange() {
         System.out.println("Values of fields:");
         System.out.println("Part Name: " + partNameTextField.getText());
@@ -79,7 +80,7 @@ public class AddPartController implements Initializable {
         }
     }
 
-    public Part savePart() {
+    private Part savePart() {
         if(inHousePart) {
             InhousePart p = new InhousePart();
             p.setName(partNameTextField.getText());
@@ -105,9 +106,12 @@ public class AddPartController implements Initializable {
         // if any fields are empty, underline field.
         if(partNameTextField.getText().isEmpty()) {
             warningAlert("The name field is blank!");
-            partNameTextField.setStyle("-fx-border-color: red;");
+            partNameTextField.setStyle("-fx-border-color: #ba171c;");
         }
-        main.inventory.addPart(savePart());
+        Part p = savePart();
+        // Get partID from inventory
+        p.setPartID(Main.inventory.getPartID());
+        Main.inventory.addPart(p);
         main.showMainScreen("parts");
     }
 
@@ -128,17 +132,14 @@ public class AddPartController implements Initializable {
         optionalRowLabel.setVisible(false);
         optionalRowTextfield.setVisible(false);
         inHouseRadio.fire();
-        addPartRadioGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-                if(addPartRadioGroup.selectedToggleProperty() != null) {
-                    if(inHouseRadio.isSelected()) {
-                        inHousePart = true;
-                        showInHouseField();
-                    } else if(outsourcedRadio.isSelected()) {
-                        inHousePart = false;
-                        showOutsourcedField();
-                    }
+        addPartRadioGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if(addPartRadioGroup.selectedToggleProperty() != null) {
+                if(inHouseRadio.isSelected()) {
+                    inHousePart = true;
+                    showInHouseField();
+                } else if(outsourcedRadio.isSelected()) {
+                    inHousePart = false;
+                    showOutsourcedField();
                 }
             }
         });
