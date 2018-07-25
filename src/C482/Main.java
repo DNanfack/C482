@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class Main extends Application {
     private Stage primaryStage;
-    private BorderPane rootLayout;
+    public BorderPane rootLayout;
     public static Inventory inventory;
 
     @Override
@@ -117,17 +117,16 @@ public class Main extends Application {
         controller.setMain(this);
     }
 
-    public void showModifyPart(Part partToModify) throws IOException {
+    /*public void showModifyPart(Part partToModify) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("View_Controller/ModifyPart.fxml"));
         AnchorPane modifyPart = loader.load();
         rootLayout.setCenter(modifyPart);
 
         // Give controller access to part and main app.
-        ModifyPartController controller = loader.getController();
+        ModifyPartController controller = new ModifyPartController(partToModify);
         controller.setMain(this);
-        controller.setPartToModify(partToModify);
-    }
+    }*/
 
     public void showAddProduct() throws IOException {
         FXMLLoader loader = new FXMLLoader();

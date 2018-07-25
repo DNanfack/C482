@@ -76,13 +76,26 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    public void modifyPartButtonPressed() {
+    public void showModifyPart(Part partToModify) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("View_Controller/ModifyPart.fxml"));
+        AnchorPane modifyPart = loader.load();
+        main.rootLayout.setCenter(modifyPart);
+
+        // Give controller access to part and main app.
+        ModifyPartController controller = new ModifyPartController(partToModify);
+        controller.setPartToModify(partToModify);
+        controller.setMain(main);
+    }
+
+    public void modifyPartButtonPressed() throws IOException{
         // Only allow single object selection
         ObservableList<Part> selectedRows = partTableView.getSelectionModel().getSelectedItems();
         if(selectedRows.size() > 1) {
             Alerts.warningAlert("You can only modify one item at a time.");
         } else {
-
+            InhousePart p = new InhousePart();
+            Alerts.warningAlert("Value of part name: " + selectedRows.get(0).getName());
         }
     }
 

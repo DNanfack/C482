@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -28,22 +30,12 @@
                </BorderPane.margin>
             </ButtonBar>
          </bottom>
-         <top>
-            <Label prefHeight="37.0" prefWidth="157.0" text="Modify Part" textFill="#5d9dfc" BorderPane.alignment="CENTER_LEFT">
-               <font>
-                  <Font name="System Font" size="24.0" />
-               </font>
-               <BorderPane.margin>
-                  <Insets bottom="10.0" left="10.0" top="10.0" />
-               </BorderPane.margin>
-            </Label>
-         </top>
          <center>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane alignment="CENTER_LEFT" prefHeight="350.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane fx:id="partGridPane" alignment="CENTER_LEFT" prefHeight="350.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="244.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="244.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="795.0" minWidth="10.0" prefWidth="688.0" />
                      </columnConstraints>
                      <rowConstraints>
@@ -56,31 +48,20 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <RadioButton alignment="CENTER_LEFT" mnemonicParsing="false" prefHeight="49.0" prefWidth="148.0" text="Outsourced">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="modifyPartRadio" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton alignment="CENTER_LEFT" mnemonicParsing="false" prefHeight="49.0" prefWidth="148.0" text="In-House" toggleGroup="$modifyPartRadio" GridPane.columnIndex="1">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </RadioButton>
-                        <Label text="ID" GridPane.rowIndex="1" />
-                        <Label text="Name" GridPane.rowIndex="2" />
-                        <Label text="Inventory" GridPane.rowIndex="3" />
-                        <Label text="Price/Cost" GridPane.rowIndex="4" />
-                        <Label text="Max" GridPane.rowIndex="5" />
-                        <Label text="Min" GridPane.rowIndex="6" />
-                        <TextField editable="false" prefHeight="27.0" prefWidth="169.0" promptText="Auto Generated" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField promptText="Part Name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="ID" />
+                        <Label text="Name" GridPane.rowIndex="1" />
+                        <Label text="Inventory" GridPane.rowIndex="2" />
+                        <Label text="Price/Cost" GridPane.rowIndex="3" />
+                        <Label text="Max" GridPane.rowIndex="4" />
+                        <Label text="Min" GridPane.rowIndex="5" />
+                        <TextField editable="false" prefHeight="27.0" prefWidth="169.0" promptText="Auto Generated" GridPane.columnIndex="1" />
+                        <TextField fx:id="partNameTextField" promptText="Part Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="inventoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="priceCostTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="maxTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="minTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="optionalRowLabel" GridPane.rowIndex="6" />
+                        <TextField fx:id="optionalRowTextfield" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />
@@ -89,6 +70,34 @@
                </children>
             </AnchorPane>
          </center>
+         <top>
+            <HBox prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="50.0" prefWidth="157.0" text="Modify Part" textFill="#5d9dfc">
+                     <font>
+                        <Font name="System Font" size="24.0" />
+                     </font>
+                  </Label>
+                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <RadioButton fx:id="inHouseRadio" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#showInHouseField" prefHeight="49.0" prefWidth="148.0" text="In-House">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="modifyPartRadioGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="outsourcedRadio" alignment="CENTER_LEFT" mnemonicParsing="false" onAction="#showOutsourcedField" prefHeight="49.0" prefWidth="148.0" text="Outsourced" toggleGroup="$modifyPartRadioGroup">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+         </top>
       </BorderPane>
    </children>
 </AnchorPane>
