@@ -74,7 +74,16 @@ public class MainScreenController implements Initializable {
                 Main.inventory.removePart(part);
             }
         }
+    }
 
+    public void modifyPartButtonPressed() {
+        // Only allow single object selection
+        ObservableList<Part> selectedRows = partTableView.getSelectionModel().getSelectedItems();
+        if(selectedRows.size() > 1) {
+            Alerts.warningAlert("You can only modify one item at a time.");
+        } else {
+
+        }
     }
 
     public void showAddProduct() throws IOException {

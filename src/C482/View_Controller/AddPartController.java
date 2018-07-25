@@ -105,7 +105,7 @@ public class AddPartController implements Initializable {
     public void saveButtonPressed() throws IOException {
         // if any fields are empty, underline field.
         if(partNameTextField.getText().isEmpty()) {
-            warningAlert("The name field is blank!");
+            Alerts.warningAlert("The name field is blank!");
             partNameTextField.setStyle("-fx-border-color: #ba171c;");
         }
         Part p = savePart();
@@ -113,18 +113,6 @@ public class AddPartController implements Initializable {
         p.setPartID(Main.inventory.getPartID());
         Main.inventory.addPart(p);
         main.showMainScreen("parts");
-    }
-
-    /**
-     * Pops up an error alert with whatever message is provided.
-     * @param message String message to go into the content text of the alert box.
-     */
-    private void warningAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Warning!");
-        alert.setHeaderText("There may be an issue.");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     @Override

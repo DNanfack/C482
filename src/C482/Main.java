@@ -2,11 +2,9 @@ package C482;
 
 import C482.Model.InhousePart;
 import C482.Model.Inventory;
+import C482.Model.Part;
 import C482.Model.Product;
-import C482.View_Controller.AddPartController;
-import C482.View_Controller.AddProductController;
-import C482.View_Controller.MainScreenController;
-import C482.View_Controller.RootLayoutController;
+import C482.View_Controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -117,6 +115,18 @@ public class Main extends Application {
         // Give the controller access to the main app.
         AddPartController controller = loader.getController();
         controller.setMain(this);
+    }
+
+    public void showModifyPart(Part partToModify) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("View_Controller/ModifyPart.fxml"));
+        AnchorPane modifyPart = loader.load();
+        rootLayout.setCenter(modifyPart);
+
+        // Give controller access to part and main app.
+        ModifyPartController controller = loader.getController();
+        controller.setMain(this);
+        controller.setPartToModify(partToModify);
     }
 
     public void showAddProduct() throws IOException {
