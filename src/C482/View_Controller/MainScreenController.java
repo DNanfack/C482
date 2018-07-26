@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
@@ -22,7 +23,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
-    private Main main;
+    private Inventory inventory;
+    private BorderPane rootLayout;
     @FXML TabPane tabPane;
     @FXML Tab partsTab;
     @FXML Tab productsTab;
@@ -34,13 +36,68 @@ public class MainScreenController implements Initializable {
     @FXML private Button partDeleteButton;
     @FXML private Button partModifyButton;
 
-
-    public void setMain(Main main) {
-        this.main = main;
+    public MainScreenController(Inventory inventory, BorderPane rootLayout) {
+        this.inventory = inventory;
+        this.rootLayout = rootLayout;
     }
 
     public void showAddPart() throws IOException {
-       main.showAddPart();
+        // Instantiate the controller and give it access to inventory.
+        FXMLLoader loader = new FXMLLoader();
+        AddPartController controller = new AddPartController(inventory, rootLayout);
+        loader.setController(controller);
+        //TODO: Remove controller selection from fxml
+        loader.setLocation(Main.class.getResource("View_Controller/AddPart.fxml"));
+        AnchorPane addPart = loader.load();
+        rootLayout.setCenter(addPart);
+    }
+
+    public void generateDummyData() {
+        //<editor-fold desc="DummyDataCreation">
+        // Add parts to product
+        Product p1 = new Product();
+        p1.setProductID(1);
+        p1.setInStock(3);
+        p1.setName("TestProduct1");
+        p1.setPrice(142.19);
+        p1.setMin(1);
+        p1.setMax(32);
+        InhousePart part1 = new InhousePart();
+        part1.setMachineID(125);
+        part1.setInStock(4);
+        part1.setName("TestPart1");
+        part1.setPrice(2.57);
+        part1.setPartID(1);
+        part1.setMin(1);
+        part1.setMax(15);
+
+        InhousePart part2 = new InhousePart();
+        part2.setMachineID(14);
+        part2.setInStock(5);
+        part2.setName("TestPart2");
+        part2.setPrice(1.27);
+        part2.setPartID(2);
+        part2.setMin(1);
+        part2.setMax(10);
+
+        InhousePart part3 = new InhousePart();
+        part3.setMachineID(125);
+        part3.setInStock(6);
+        part3.setName("TestPart3");
+        part3.setPrice(8.63);
+        part3.setPartID(3);
+        part3.setMin(1);
+        part3.setMax(30);
+
+        p1.addAssociatedPart(part1);
+        p1.addAssociatedPart(part2);
+        p1.addAssociatedPart(part3);
+
+        inventory.addProduct(p1);
+        inventory.addPart(part1);
+        inventory.addPart(part2);
+        inventory.addPart(part3);
+        //</editor-fold>
     }
 
     /**
@@ -71,7 +128,7 @@ public class MainScreenController implements Initializable {
             // Loop through list until match found.
             //TODO: Not working when multiple are selected.
             for (Part part : selectedRows) {
-                Main.inventory.removePart(part);
+                inventory.removePart(part);
             }
         }
     }
@@ -80,12 +137,11 @@ public class MainScreenController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("View_Controller/ModifyPart.fxml"));
         AnchorPane modifyPart = loader.load();
-        main.rootLayout.setCenter(modifyPart);
+        rootLayout.setCenter(modifyPart);
 
         // Give controller access to part and main app.
         ModifyPartController controller = new ModifyPartController(partToModify);
         controller.setPartToModify(partToModify);
-        controller.setMain(main);
     }
 
     public void modifyPartButtonPressed() throws IOException{
@@ -100,7 +156,7 @@ public class MainScreenController implements Initializable {
     }
 
     public void showAddProduct() throws IOException {
-        main.showAddProduct();
+        showAddProduct();
     }
 
     public void selectTab(String tab) {
@@ -123,11 +179,12 @@ public class MainScreenController implements Initializable {
         partNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("inStock"));
         priceCostColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
-        partTableView.setItems(Main.inventory.getAllParts());
+        partTableView.setItems(inventory.getAllParts());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        generateDummyData();
         // Allows editing for table and selecting multiple rows
         partTableView.setEditable(true);
         partTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

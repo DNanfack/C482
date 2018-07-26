@@ -2,6 +2,7 @@ package C482.View_Controller;
 
 import C482.Main;
 import C482.Model.InhousePart;
+import C482.Model.Inventory;
 import C482.Model.OutsourcedPart;
 import C482.Model.Part;
 import javafx.beans.value.ChangeListener;
@@ -9,6 +10,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
@@ -18,6 +20,8 @@ import java.util.ResourceBundle;
 
 public class AddPartController implements Initializable {
     private Main main;
+    private Inventory inventory;
+    BorderPane rootLayout;
     private boolean inHousePart;
     @FXML RadioButton inHouseRadio;
     @FXML RadioButton outsourcedRadio;
@@ -31,18 +35,22 @@ public class AddPartController implements Initializable {
     @FXML TextField maxTextField;
     @FXML TextField minTextField;
 
-
-    public void setMain(Main main) {
-        this.main = main;
+    /**
+     * Constructor that passes inventory object to class.
+     * @param inventory Inventory to manage.
+     */
+    public AddPartController(Inventory inventory, BorderPane rootLayout) {
+        this.inventory = inventory;
+        this.rootLayout = rootLayout;
     }
-
-    private void showMainScreen() {
+    //TODO: Fix this with new settings
+    /*private void showMainScreen() {
         try {
-            main.showMainScreen("parts");
+            showMainScreen("parts");
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void showInHouseField() {
         optionalRowLabel.setText("Machine ID");
@@ -57,18 +65,6 @@ public class AddPartController implements Initializable {
         inHousePart = false;
     }
 
-    //TODO: Can probably remove this.  Was used for testing.
-    public void showValuesAndChange() {
-        System.out.println("Values of fields:");
-        System.out.println("Part Name: " + partNameTextField.getText());
-        System.out.println("Inventory: " + inventoryTextField.getText());
-        System.out.println("Price/Cost: " + priceCostTextField.getText());
-        System.out.println("Max: " + maxTextField.getText());
-        System.out.println("Min: " + minTextField.getText());
-
-        showMainScreen();
-    }
-
     public void cancelButtonPressed() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel add part?");
@@ -76,7 +72,8 @@ public class AddPartController implements Initializable {
         alert.setContentText("Are you sure?");
         Optional<ButtonType> optional = alert.showAndWait();
         if(optional.get() == ButtonType.OK) {
-            showMainScreen();
+            //TODO: Fix this after setting up new style
+            // showMainScreen();
         }
     }
 
@@ -110,9 +107,10 @@ public class AddPartController implements Initializable {
         }
         Part p = savePart();
         // Get partID from inventory
-        p.setPartID(Main.inventory.getPartID());
-        Main.inventory.addPart(p);
-        main.showMainScreen("parts");
+        p.setPartID(inventory.getPartID());
+        inventory.addPart(p);
+        //TODO: Update to main style
+        // main.showMainScreen("parts");
     }
 
     @Override

@@ -16,7 +16,8 @@ public class AddProductController implements Initializable {
     }
 
     public void showMainScreen(ActionEvent event) throws IOException {
-        main.showMainScreen("products");
+        //TODO: Update to new style
+        //showMainScreen("products");
     }
 
     @Override
