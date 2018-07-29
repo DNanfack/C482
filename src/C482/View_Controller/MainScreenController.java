@@ -28,13 +28,13 @@ public class MainScreenController implements Initializable {
     @FXML TabPane tabPane;
     @FXML Tab partsTab;
     @FXML Tab productsTab;
-    @FXML private TableView<Part> partTableView;
-    @FXML private TableColumn<Part, String> partIDColumn;
-    @FXML private TableColumn<Part, String> partNameColumn;
-    @FXML private TableColumn<Part, String> partInventoryLevelColumn;
-    @FXML private TableColumn<Part, String> priceCostColumn;
-    @FXML private Button partDeleteButton;
-    @FXML private Button partModifyButton;
+    @FXML public TableView<Part> partTableView;
+    @FXML public TableColumn<Part, String> partIDColumn;
+    @FXML public TableColumn<Part, String> partNameColumn;
+    @FXML public TableColumn<Part, String> partInventoryLevelColumn;
+    @FXML public TableColumn<Part, String> priceCostColumn;
+    @FXML public Button partDeleteButton;
+    @FXML public Button partModifyButton;
 
     public MainScreenController(Inventory inventory, BorderPane rootLayout) {
         this.inventory = inventory;
@@ -44,10 +44,10 @@ public class MainScreenController implements Initializable {
     public void showAddPart() throws IOException {
         // Instantiate the controller and give it access to inventory.
         FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("View_Controller/AddPart.fxml"));
         AddPartController controller = new AddPartController(inventory, rootLayout);
         loader.setController(controller);
-        //TODO: Remove controller selection from fxml
-        loader.setLocation(Main.class.getResource("View_Controller/AddPart.fxml"));
+
         AnchorPane addPart = loader.load();
         rootLayout.setCenter(addPart);
     }
@@ -116,7 +116,7 @@ public class MainScreenController implements Initializable {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Delete part?");
-        alert.setHeaderText("Are you sure you want to delete the following parts?");
+        alert.setHeaderText("Are you sure you want to delete the following part(s)?");
         StringBuilder partsToDelete = new StringBuilder();
         // Iterates through matching parts to get names to confirm
         for(Part part: selectedRows){
@@ -184,7 +184,6 @@ public class MainScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        generateDummyData();
         // Allows editing for table and selecting multiple rows
         partTableView.setEditable(true);
         partTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

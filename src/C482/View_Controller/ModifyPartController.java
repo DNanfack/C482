@@ -73,7 +73,7 @@ public class ModifyPartController implements Initializable {
         maxTextField.setText(Integer.toString(partToModify.getMax()));
         minTextField.setText(Integer.toString(partToModify.getMin()));
         // Set optional text field based on part type
-        if(partToModify.getClass().getName().equals("InhousePart")) {
+        if(partToModify instanceof  InhousePart) {
             inHouseRadio.fire();
             optionalRowTextfield.setText(Integer.toString(((InhousePart) partToModify).getMachineID()));
         } else {

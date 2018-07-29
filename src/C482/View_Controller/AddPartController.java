@@ -8,8 +8,10 @@ import C482.Model.Part;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -43,14 +45,17 @@ public class AddPartController implements Initializable {
         this.inventory = inventory;
         this.rootLayout = rootLayout;
     }
-    //TODO: Fix this with new settings
-    /*private void showMainScreen() {
-        try {
-            showMainScreen("parts");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
+
+    private void showMainScreen() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("View_Controller/MainScreen.fxml"));
+        MainScreenController controller = new MainScreenController(inventory, rootLayout);
+        loader.setController(controller);
+
+        AnchorPane mainScreen = loader.load();
+        rootLayout.setCenter(mainScreen);
+        controller.selectTab("parts");
+    }
 
     public void showInHouseField() {
         optionalRowLabel.setText("Machine ID");
@@ -65,15 +70,14 @@ public class AddPartController implements Initializable {
         inHousePart = false;
     }
 
-    public void cancelButtonPressed() {
+    public void cancelButtonPressed() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel add part?");
         alert.setHeaderText("Are you sure you want to cancel?");
         alert.setContentText("Are you sure?");
         Optional<ButtonType> optional = alert.showAndWait();
         if(optional.get() == ButtonType.OK) {
-            //TODO: Fix this after setting up new style
-            // showMainScreen();
+            showMainScreen();
         }
     }
 
@@ -109,8 +113,7 @@ public class AddPartController implements Initializable {
         // Get partID from inventory
         p.setPartID(inventory.getPartID());
         inventory.addPart(p);
-        //TODO: Update to main style
-        // main.showMainScreen("parts");
+        showMainScreen();
     }
 
     @Override

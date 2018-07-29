@@ -56,6 +56,7 @@ public class Main extends Application {
         rootLayout.setCenter(mainScreen);
         // Select tab for TableView
         controller.selectTab(tabName);
+        controller.generateDummyData();
     }
 
     public void showAddPart() throws IOException {

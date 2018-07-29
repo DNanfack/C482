@@ -1,6 +1,5 @@
 package C482.View_Controller;
 
-import C482.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -8,8 +7,7 @@ import javafx.scene.control.MenuItem;
 
 public class RootLayoutController {
 
-    @FXML
-    private MenuItem fileCloseMenuItem;
+    @FXML public MenuItem fileCloseMenuItem;
 
     //Handle fileCloseMenuClick
     @FXML
