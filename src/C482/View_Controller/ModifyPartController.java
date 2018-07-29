@@ -24,7 +24,6 @@ public class ModifyPartController implements Initializable {
     private Inventory inventory;
     private BorderPane rootLayout;
     private Part partToModify;
-    private boolean inHousePart;
     @FXML RadioButton inHouseRadio;
     @FXML RadioButton outsourcedRadio;
     @FXML ToggleGroup modifyPartRadioGroup;
@@ -44,26 +43,15 @@ public class ModifyPartController implements Initializable {
         this.rootLayout = rootLyout;
     }
 
-    public void setMain(Main main) {
-        this.main = main;
-    }
-
-    //TODO: Can probably remove this part
-    public void setPartToModify(Part partToModify) {
-        this.partToModify = partToModify;
-    }
-
     public void showInHouseField() {
         optionalRowLabel.setText("Machine ID");
         optionalRowLabel.setVisible(true);
         optionalRowTextfield.setVisible(true);
-        inHousePart = true;
     }
     public void showOutsourcedField() {
         optionalRowLabel.setText("Company Name");
         optionalRowLabel.setVisible(true);
         optionalRowTextfield.setVisible(true);
-        inHousePart = false;
     }
 
     public void showPartData() {
@@ -141,18 +129,6 @@ public class ModifyPartController implements Initializable {
         optionalRowLabel.setVisible(false);
         optionalRowTextfield.setVisible(false);
         partIDTextField.setDisable(true);
-        //TODO: Probably don't need this anymore
-        /*modifyPartRadioGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
-            if(modifyPartRadioGroup.selectedToggleProperty() != null) {
-                if(inHouseRadio.isSelected()) {
-                    inHousePart = true;
-                    showInHouseField();
-                } else if(outsourcedRadio.isSelected()) {
-                    inHousePart = false;
-                    showOutsourcedField();
-                }
-            }
-        });*/
         showPartData();
     }
 }
