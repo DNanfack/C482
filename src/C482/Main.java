@@ -1,9 +1,6 @@
 package C482;
 
-import C482.Model.InhousePart;
 import C482.Model.Inventory;
-import C482.Model.Part;
-import C482.Model.Product;
 import C482.View_Controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -57,16 +54,6 @@ public class Main extends Application {
         // Select tab for TableView
         controller.selectTab(tabName);
         controller.generateDummyData();
-    }
-
-    public void showAddPart() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("View_Controller/AddPart.fxml"));
-        AnchorPane addPart = loader.load();
-        rootLayout.setCenter(addPart);
-
-        // Give the controller access to the main app.
-        AddPartController controller = loader.getController();
     }
 
     /*public void showModifyPart(Part partToModify) throws IOException {

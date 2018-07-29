@@ -52,6 +52,16 @@ public class MainScreenController implements Initializable {
         rootLayout.setCenter(addPart);
     }
 
+    public void showModifyPart(Part partToModify) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("View_Controller/ModifyPart.fxml"));
+        ModifyPartController controller = new ModifyPartController(partToModify,inventory, rootLayout);
+        loader.setController(controller);
+
+        AnchorPane modifyPart = loader.load();
+        rootLayout.setCenter(modifyPart);
+    }
+
     public void generateDummyData() {
         //<editor-fold desc="DummyDataCreation">
         // Add parts to product
@@ -89,6 +99,15 @@ public class MainScreenController implements Initializable {
         part3.setMin(1);
         part3.setMax(30);
 
+        OutsourcedPart part4 = new OutsourcedPart();
+        part4.setCompanyName("Test Company 1");
+        part4.setInStock(9);
+        part4.setName("TestPart4");
+        part4.setPrice(125.32);
+        part4.setPartID(4);
+        part4.setMin(1);
+        part4.setMax(214);
+
         p1.addAssociatedPart(part1);
         p1.addAssociatedPart(part2);
         p1.addAssociatedPart(part3);
@@ -97,6 +116,7 @@ public class MainScreenController implements Initializable {
         inventory.addPart(part1);
         inventory.addPart(part2);
         inventory.addPart(part3);
+        inventory.addPart(part4);
         //</editor-fold>
     }
 
@@ -133,30 +153,19 @@ public class MainScreenController implements Initializable {
         }
     }
 
-    public void showModifyPart(Part partToModify) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("View_Controller/ModifyPart.fxml"));
-        AnchorPane modifyPart = loader.load();
-        rootLayout.setCenter(modifyPart);
-
-        // Give controller access to part and main app.
-        ModifyPartController controller = new ModifyPartController(partToModify);
-        controller.setPartToModify(partToModify);
-    }
-
     public void modifyPartButtonPressed() throws IOException{
         // Only allow single object selection
         ObservableList<Part> selectedRows = partTableView.getSelectionModel().getSelectedItems();
         if(selectedRows.size() > 1) {
             Alerts.warningAlert("You can only modify one item at a time.");
         } else {
-            InhousePart p = new InhousePart();
-            Alerts.warningAlert("Value of part name: " + selectedRows.get(0).getName());
+            Part partToModify = partTableView.getSelectionModel().getSelectedItem();
+            showModifyPart(partToModify);
         }
     }
 
     public void showAddProduct() throws IOException {
-        showAddProduct();
+        //TODO: Write method.
     }
 
     public void selectTab(String tab) {

@@ -16,14 +16,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C482.View_Controller.ModifyPartController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <buttons>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Save" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Cancel" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveButtonPressed" text="Save" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel" />
                </buttons>
                <BorderPane.margin>
                   <Insets right="10.0" />
@@ -54,7 +54,7 @@
                         <Label text="Price/Cost" GridPane.rowIndex="3" />
                         <Label text="Max" GridPane.rowIndex="4" />
                         <Label text="Min" GridPane.rowIndex="5" />
-                        <TextField editable="false" prefHeight="27.0" prefWidth="169.0" promptText="Auto Generated" GridPane.columnIndex="1" />
+                        <TextField fx:id="partIDTextField" editable="false" prefHeight="27.0" prefWidth="169.0" promptText="Auto Generated" GridPane.columnIndex="1" />
                         <TextField fx:id="partNameTextField" promptText="Part Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="inventoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="priceCostTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />

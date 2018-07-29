@@ -91,8 +91,13 @@ public class Inventory {
         return ++partID;
     }
 
-    public void updatePart(int partID) {
-        //TODO: Create method
+    public void updatePart(Part partToUpdate) {
+        for(int i = 0; i < allParts.size(); i++) {
+            if(allParts.get(i).getPartID() == partToUpdate.getPartID()) { // Match found
+                allParts.set(i, partToUpdate);
+                break;
+            }
+        }
     }
 
     public ObservableList<Part> getAllParts() {
