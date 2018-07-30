@@ -4,6 +4,7 @@ import C482.Main;
 import C482.Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -197,7 +198,17 @@ public class MainScreenController implements Initializable {
         partTableView.setEditable(true);
         partTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+        /*searchModel.searchFailProperty().addListener((o, n, v) ->
+                SearchFieldClassTool.updateStateClass(fieldSearch, v));*/
+
         showPartTableData();
     }
 
+    /*private static final PseudoClass CLASS_FAIL
+            = PseudoClass.getPseudoClass("fail");
+
+    public static void updateStateClass(final Node node,
+                                        final boolean isFail) {
+        node.pseudoClassStateChanged(CLASS_FAIL, isFail);
+    }*/
 }

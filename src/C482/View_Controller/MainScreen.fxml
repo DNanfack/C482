@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
@@ -9,11 +10,13 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.textfield.CustomTextField?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -39,17 +42,45 @@
                                  <top>
                                     <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <Label text="Parts Management" textFill="#da535c">
-                                             <padding>
-                                                <Insets left="10.0" />
-                                             </padding>
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                          <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="23.0" prefWidth="61.0" text="Search" />
-                                          <TextField promptText="Enter Part ID" />
+                                          <ToolBar prefHeight="39.0" prefWidth="1092.0">
+                                            <items>
+                                                <Label text="Parts Management" textFill="#da535c">
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Region prefHeight="27.0" prefWidth="502.0" />
+                                                <Button fx:id="buttonClearSearch" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="0.0" styleClass="buttonSearchClear">
+                                                <graphic>
+                                                    <FontAwesomeIconView styleClass="buttonSearchClearIcon" />
+                                                </graphic>
+                                                </Button>
+                                                <CustomTextField fx:id="textFieldPartSearch" styleClass="searchField">
+                                                    <left>
+                                                        <Label styleClass="searchBoxLabel">
+                                                            <graphic>
+                                                                <FontAwesomeIconView styleClass="searchBoxLabelIcon" />
+                                                            </graphic>
+                                                        </Label>
+                                                    </left>
+                                                </CustomTextField>
+                                                <Button fx:id="buttonSearchUp" mnemonicParsing="false" styleClass="buttonSearchUp">
+                                                    <graphic>
+                                                        <FontAwesomeIconView styleClass="buttonSearchUpIcon" />
+                                                    </graphic>
+                                                </Button>
+                                                <Button fx:id="buttonSearchDown" mnemonicParsing="false" styleClass="buttonSearchDown">
+                                                    <graphic>
+                                                        <FontAwesomeIconView styleClass="buttonSearchDownIcon" />
+                                                    </graphic>
+                                                </Button>
+                                                <Label fx:id="labelSearchResults">
+                                                </Label>
+                                            </items>
+                                          </ToolBar>
                                        </children>
                                     </HBox>
                                  </top>

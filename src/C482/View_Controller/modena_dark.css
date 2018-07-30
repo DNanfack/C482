@@ -54,3 +54,36 @@
 .scroll-bar > .decrement-button:pressed > .decrement-arrow {
     -fx-background-color: -fx-mark-highlight-color, rgb(255, 255, 255);
 }
+
+/*.searchField:fail {*/
+    /*-fx-background-color: -colour-search-fail;*/
+/*}*/
+
+.buttonSearchClearIcon {
+    -glyph-size: 15;
+    -glyph-name: CLOSE;
+}
+
+.buttonSearchClear, .buttonSearchClearIcon, .buttonSearchDown, .buttonSearchUp, .buttonSearchUpIcon, .buttonSearchDownIcon, .searchBoxLabelIcon {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-fill: rgb(220, 220, 220);
+}
+
+.buttonSearchUpIcon {
+    -glyph-size: 15;
+    -glyph-name: CHEVRON_UP;
+}
+
+.buttonSearchDownIcon {
+    -glyph-size: 15;
+    -glyph-name: CHEVRON_DOWN;
+}
+
+.searchBoxLabel {
+    -fx-padding: 0 2 0 7;
+}
+.searchBoxLabelIcon {
+    -glyph-size: 13;
+    -glyph-name: SEARCH;
+}
