@@ -227,12 +227,19 @@ public class MainScreenController implements Initializable {
         textFieldPartSearch.clear();
     }
 
+    public void setPartTableColumnWidth() {
+        partIDColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
+        partNameColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
+        partInventoryLevelColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
+        priceCostColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Allows editing for table and selecting multiple rows
         partTableView.setEditable(true);
         partTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
+        setPartTableColumnWidth();
         showPartTableData();
     }
 
