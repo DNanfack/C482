@@ -53,12 +53,12 @@
                                                    </font>
                                                 </Label>
                                                 <Region prefHeight="27.0" prefWidth="502.0" />
-                                                <Button fx:id="buttonClearSearch" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="26.0" prefWidth="0.0" styleClass="buttonSearchClear">
+                                                <Button fx:id="buttonClearSearch" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearTextFieldPartSearch" prefHeight="26.0" prefWidth="0.0" styleClass="buttonSearchClear">
                                                 <graphic>
                                                     <FontAwesomeIconView styleClass="buttonSearchClearIcon" />
                                                 </graphic>
                                                 </Button>
-                                                <CustomTextField fx:id="textFieldPartSearch" styleClass="searchField">
+                                                <CustomTextField fx:id="textFieldPartSearch" prefHeight="27.0" prefWidth="250.0" styleClass="searchField">
                                                     <left>
                                                         <Label styleClass="searchBoxLabel">
                                                             <graphic>
@@ -67,16 +67,7 @@
                                                         </Label>
                                                     </left>
                                                 </CustomTextField>
-                                                <Button fx:id="buttonSearchUp" mnemonicParsing="false" styleClass="buttonSearchUp">
-                                                    <graphic>
-                                                        <FontAwesomeIconView styleClass="buttonSearchUpIcon" />
-                                                    </graphic>
-                                                </Button>
-                                                <Button fx:id="buttonSearchDown" mnemonicParsing="false" styleClass="buttonSearchDown">
-                                                    <graphic>
-                                                        <FontAwesomeIconView styleClass="buttonSearchDownIcon" />
-                                                    </graphic>
-                                                </Button>
+                                                <Button fx:id="buttonSearchDown" mnemonicParsing="false" styleClass="buttonSearchDown" />
                                                 <Label fx:id="labelSearchResults">
                                                 </Label>
                                             </items>

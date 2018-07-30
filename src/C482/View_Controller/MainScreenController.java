@@ -4,6 +4,8 @@ import C482.Main;
 import C482.Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import org.controlsfx.control.textfield.CustomTextField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,6 +39,8 @@ public class MainScreenController implements Initializable {
     @FXML public TableColumn<Part, String> priceCostColumn;
     @FXML public Button partDeleteButton;
     @FXML public Button partModifyButton;
+    @FXML private Button buttonSearchDown, buttonSearchUp;
+    @FXML private CustomTextField textFieldPartSearch;
 
     public MainScreenController(Inventory inventory, BorderPane rootLayout) {
         this.inventory = inventory;
@@ -185,11 +190,41 @@ public class MainScreenController implements Initializable {
     }
 
     private void showPartTableData() {
+        // Add all parts to filtered list
+        FilteredList<Part> filteredParts = new FilteredList<>(inventory.getAllParts(), p -> true);
+        textFieldPartSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredParts.setPredicate(part -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Build filters
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if(part.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Matches part name
+                } else if(String.valueOf(part.getPartID()).contains(lowerCaseFilter)) {
+                    return true; // ID Matches
+                }
+                return false; // No matches
+            });
+        });
+
+        // Wrap filtered list in sorted list
+        SortedList<Part> sortedParts = new SortedList<>(filteredParts);
+
+        // Bind Sorted List to TableView
+        sortedParts.comparatorProperty().bind(partTableView.comparatorProperty());
+
         partIDColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partID"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("inStock"));
         priceCostColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
-        partTableView.setItems(inventory.getAllParts());
+        partTableView.setItems(filteredParts);
+    }
+
+    public void clearTextFieldPartSearch() {
+        textFieldPartSearch.clear();
     }
 
     @Override
@@ -197,9 +232,6 @@ public class MainScreenController implements Initializable {
         // Allows editing for table and selecting multiple rows
         partTableView.setEditable(true);
         partTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        /*searchModel.searchFailProperty().addListener((o, n, v) ->
-                SearchFieldClassTool.updateStateClass(fieldSearch, v));*/
 
         showPartTableData();
     }
