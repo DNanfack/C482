@@ -216,7 +216,14 @@ public class MainScreenController implements Initializable {
     }
 
     public void showAddProduct() throws IOException {
-        //TODO: Write method.
+        // Instantiate the controller and give it access to inventory
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("View_Controller/AddProduct.fxml"));
+        AddProductController controller = new AddProductController(inventory, rootLayout);
+        loader.setController(controller);
+
+        AnchorPane addProduct = loader.load();
+        rootLayout.setCenter(addProduct);
     }
 
     public void selectTab(String tab) {

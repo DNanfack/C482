@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class AddPartController implements Initializable {
     private Main main;
     private Inventory inventory;
-    BorderPane rootLayout;
+    private BorderPane rootLayout;
     private boolean inHousePart;
     @FXML RadioButton inHouseRadio;
     @FXML RadioButton outsourcedRadio;

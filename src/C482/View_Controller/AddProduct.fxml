@@ -69,11 +69,11 @@
                                  </padding>
                               </Label>
                               <TextField editable="false" promptText="Auto Generated" GridPane.columnIndex="1" />
-                              <TextField promptText="Product Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="productNameTextField" promptText="Product Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="inventoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="priceCostTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="maxTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="minTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -92,7 +92,7 @@
                                           <HBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
                                                 <Button mnemonicParsing="false" text="Search" />
-                                                <TextField promptText="Part ID" />
+                                                <TextField fx:id="textFieldAvailablePartsSearch" promptText="Part ID" />
                                              </children>
                                              <padding>
                                                 <Insets right="10.0" />
@@ -102,7 +102,7 @@
                                        <bottom>
                                           <ButtonBar prefHeight="40.0" prefWidth="737.0" BorderPane.alignment="CENTER">
                                             <buttons>
-                                              <Button mnemonicParsing="false" text="Add" />
+                                              <Button fx:id="buttonAvailablePartsAdd" mnemonicParsing="false" text="Add" />
                                             </buttons>
                                              <BorderPane.margin>
                                                 <Insets right="10.0" />
@@ -112,12 +112,12 @@
                                        <center>
                                           <AnchorPane prefHeight="296.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <TableView prefHeight="180.0" prefWidth="747.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView fx:id="tableViewAvailableParts" prefHeight="180.0" prefWidth="747.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="195.0" text="Part ID" />
-                                                    <TableColumn prefWidth="195.0" text="Part Name" />
-                                                      <TableColumn prefWidth="160.0" text="Inventory Level" />
-                                                      <TableColumn prefWidth="195.0" text="Price per Unit" />
+                                                    <TableColumn fx:id="columnAvailablePartsID" prefWidth="195.0" text="Part ID" />
+                                                    <TableColumn fx:id="columnAvailablePartsName" prefWidth="195.0" text="Part Name" />
+                                                      <TableColumn fx:id="columnAvailablePartsInventory" prefWidth="160.0" text="Inventory Level" />
+                                                      <TableColumn fx:id="columnAvailablePartsPrice" prefWidth="195.0" text="Price per Unit" />
                                                   </columns>
                                                 </TableView>
                                              </children>
@@ -133,7 +133,7 @@
                                           <HBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
                                                 <Button mnemonicParsing="false" text="Search" />
-                                                <TextField promptText="Part ID" />
+                                                <TextField fx:id="textFieldPartsToAddSearch" promptText="Part ID" />
                                              </children>
                                              <padding>
                                                 <Insets right="10.0" />
@@ -143,7 +143,7 @@
                                        <bottom>
                                           <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <buttons>
-                                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Delete" />
+                                                <Button fx:id="buttonPartsToAddRemove" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Remove" />
                                              </buttons>
                                              <BorderPane.margin>
                                                 <Insets right="10.0" />
@@ -153,12 +153,12 @@
                                        <center>
                                           <AnchorPane prefHeight="145.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <TableView prefHeight="200.0" prefWidth="747.0" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView fx:id="tableViewPartsToAdd" prefHeight="200.0" prefWidth="747.0" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <columns>
-                                                      <TableColumn prefWidth="189.0" text="Part ID" />
-                                                      <TableColumn prefWidth="189.0" text="Part Name" />
-                                                      <TableColumn prefWidth="189.0" text="Inventory Level" />
-                                                      <TableColumn prefWidth="179.0" text="Price per Unit" />
+                                                      <TableColumn fx:id="columnPartsToAddID" prefWidth="189.0" text="Part ID" />
+                                                      <TableColumn fx:id="columnPartsToAddName" prefWidth="189.0" text="Part Name" />
+                                                      <TableColumn fx:id="columnPartsToAddInventory" prefWidth="189.0" text="Inventory Level" />
+                                                      <TableColumn fx:id="columnPartsToAddPrice" prefWidth="179.0" text="Price per Unit" />
                                                    </columns>
                                                 </TableView>
                                              </children>
@@ -190,8 +190,8 @@
          <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Save" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showMainScreen" text="Cancel" />
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveButtonPressed" text="Save" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel" />
               </buttons>
                <padding>
                   <Insets right="10.0" />

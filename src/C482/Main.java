@@ -76,7 +76,6 @@ public class Main extends Application {
 
         // Give controller access to main
         AddProductController controller = loader.getController();
-        controller.setMain(this);
     }
 
     public static void main(String[] args) {
