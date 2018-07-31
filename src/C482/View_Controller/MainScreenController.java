@@ -2,23 +2,16 @@ package C482.View_Controller;
 
 import C482.Main;
 import C482.Model.*;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import org.controlsfx.control.textfield.CustomTextField;
 
 import java.io.IOException;
@@ -33,14 +26,12 @@ public class MainScreenController implements Initializable {
     @FXML Tab partsTab;
     @FXML Tab productsTab;
     @FXML public TableView<Part> partTableView;
-    @FXML public TableColumn<Part, String> partIDColumn;
-    @FXML public TableColumn<Part, String> partNameColumn;
-    @FXML public TableColumn<Part, String> partInventoryLevelColumn;
-    @FXML public TableColumn<Part, String> priceCostColumn;
-    @FXML public Button partDeleteButton;
-    @FXML public Button partModifyButton;
-    @FXML private Button buttonSearchDown, buttonSearchUp;
-    @FXML private CustomTextField textFieldPartSearch;
+    @FXML public TableView<Product> productTableView;
+    @FXML public TableColumn partIDColumn, partNameColumn, partInventoryLevelColumn, partPriceCostColumn;
+    @FXML public TableColumn productIDColumn, productNameColumn, productInventoryLevelColumn, productPriceCostColumn;
+    @FXML public Button partDeleteButton, productDeleteButton;
+    @FXML public Button partModifyButton, productModifyButton;
+    @FXML private CustomTextField textFieldPartSearch, textFieldProductSearch;
 
     public MainScreenController(Inventory inventory, BorderPane rootLayout) {
         this.inventory = inventory;
@@ -72,12 +63,29 @@ public class MainScreenController implements Initializable {
         //<editor-fold desc="DummyDataCreation">
         // Add parts to product
         Product p1 = new Product();
-        p1.setProductID(1);
+        p1.setProductID(12);
         p1.setInStock(3);
         p1.setName("TestProduct1");
         p1.setPrice(142.19);
         p1.setMin(1);
         p1.setMax(32);
+
+        Product p2 = new Product();
+        p2.setProductID(6);
+        p2.setInStock(6);
+        p2.setName("TestProduct3");
+        p2.setPrice(20.21);
+        p2.setMin(4);
+        p2.setMax(20);
+
+        Product p3 = new Product();
+        p3.setProductID(6);
+        p3.setInStock(6);
+        p3.setName("TestProduct4");
+        p3.setPrice(40.12);
+        p3.setMin(4);
+        p3.setMax(20);
+
         InhousePart part1 = new InhousePart();
         part1.setMachineID(125);
         part1.setInStock(4);
@@ -118,7 +126,14 @@ public class MainScreenController implements Initializable {
         p1.addAssociatedPart(part2);
         p1.addAssociatedPart(part3);
 
+        p2.addAssociatedPart(part4);
+        p2.addAssociatedPart(part1);
+
+        p3.addAssociatedPart(part2);
+
         inventory.addProduct(p1);
+        inventory.addProduct(p2);
+        inventory.addProduct(p3);
         inventory.addPart(part1);
         inventory.addPart(part2);
         inventory.addPart(part3);
@@ -132,6 +147,11 @@ public class MainScreenController implements Initializable {
     public void userClickedOnPartTable() {
         this.partDeleteButton.setDisable(false);
         this.partModifyButton.setDisable(false);
+    }
+
+    public void userClickedOnProductTable() {
+        this.productDeleteButton.setDisable(false);
+        this.productModifyButton.setDisable(false);
     }
 
     public void deletePartButtonPressed() {
@@ -155,6 +175,31 @@ public class MainScreenController implements Initializable {
             //TODO: Not working when multiple are selected.
             for (Part part : selectedRows) {
                 inventory.removePart(part);
+            }
+        }
+    }
+
+    public void deleteProductButtonPressed() {
+        ObservableList<Product> selectedRows;
+
+        // Gets selected rows
+        selectedRows = productTableView.getSelectionModel().getSelectedItems();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete product?");
+        alert.setHeaderText("Are you sure you want to delete the following product(s)?");
+        StringBuilder productsToDelete = new StringBuilder();
+        // Iterates through matching parts to get names to confirm
+        for(Product product: selectedRows){
+            productsToDelete.append(product.getName()).append("\n");
+        }
+        alert.setContentText("Remove Parts:\n" + productsToDelete);
+        Optional<ButtonType> optional = alert.showAndWait();
+        if(optional.get() == ButtonType.OK) {
+            // Loop through list until match found.
+            //TODO: Not working when multiple are selected.
+            for (Product product : selectedRows) {
+                inventory.removeProduct(product);
             }
         }
     }
@@ -191,7 +236,7 @@ public class MainScreenController implements Initializable {
 
     private void showPartTableData() {
         // Add all parts to filtered list
-        FilteredList<Part> filteredParts = new FilteredList<>(inventory.getAllParts(), p -> true);
+        FilteredList<Part> filteredParts = new FilteredList<>(inventory.getParts(), p -> true);
         textFieldPartSearch.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredParts.setPredicate(part -> {
                 if(newValue == null || newValue.isEmpty()) {
@@ -219,19 +264,57 @@ public class MainScreenController implements Initializable {
         partIDColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partID"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
         partInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("inStock"));
-        priceCostColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
-        partTableView.setItems(filteredParts);
+        partPriceCostColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
+        partTableView.setItems(sortedParts);
+    }
+
+    public void showProductTableData() {
+        // Add all products to filtered list
+        FilteredList<Product> filteredProducts = new FilteredList<>(inventory.getProducts(), p -> true);
+        textFieldProductSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredProducts.setPredicate(product -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Build filters for search
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if(product.getName().toLowerCase().contains(lowerCaseFilter)) { // Matches product name
+                    return true;
+                } else if(String.valueOf(product.getProductID()).contains(lowerCaseFilter)) { // matches product ID
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        // Wrap filtered list in sorted list
+        SortedList<Product> sortedProducts = new SortedList<>(filteredProducts);
+
+        // Bind sorted list to table view
+        sortedProducts.comparatorProperty().bind(productTableView.comparatorProperty());
+
+        productIDColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("productID"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+        productInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("inStock"));
+        productPriceCostColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
+        productTableView.setItems(sortedProducts);
     }
 
     public void clearTextFieldPartSearch() {
         textFieldPartSearch.clear();
     }
 
+    public void clearTextFieldProductSearch() {
+        textFieldProductSearch.clear();
+    }
+
     public void setPartTableColumnWidth() {
         partIDColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
         partNameColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
         partInventoryLevelColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
-        priceCostColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
+        partPriceCostColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
     }
 
     @Override
@@ -239,8 +322,11 @@ public class MainScreenController implements Initializable {
         // Allows editing for table and selecting multiple rows
         partTableView.setEditable(true);
         partTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        productTableView.setEditable(true);
+        productTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         setPartTableColumnWidth();
         showPartTableData();
+        showProductTableData();
     }
 
     /*private static final PseudoClass CLASS_FAIL

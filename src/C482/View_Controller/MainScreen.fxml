@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -52,13 +51,13 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <Region prefHeight="27.0" prefWidth="492.0" />
-                                                <Button fx:id="buttonClearSearch" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearTextFieldPartSearch" prefHeight="26.0" prefWidth="0.0" styleClass="buttonSearchClear">
+                                                <Region prefHeight="27.0" prefWidth="460.0" />
+                                                <Button fx:id="buttonClearPartSearch" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearTextFieldPartSearch" prefHeight="26.0" prefWidth="0.0" styleClass="buttonSearchClear">
                                                 <graphic>
                                                     <FontAwesomeIconView styleClass="buttonSearchClearIcon" />
                                                 </graphic>
                                                 </Button>
-                                                <CustomTextField fx:id="textFieldPartSearch" prefHeight="27.0" prefWidth="250.0" styleClass="searchField">
+                                                <CustomTextField fx:id="textFieldPartSearch" prefHeight="27.0" prefWidth="240.0" styleClass="searchField">
                                                     <left>
                                                         <Label styleClass="searchBoxLabel">
                                                             <graphic>
@@ -93,7 +92,7 @@
                                         <TableColumn fx:id="partIDColumn" prefWidth="250.0" text="Part ID" />
                                         <TableColumn fx:id="partNameColumn" prefWidth="250.0" text="Part Name" />
                                           <TableColumn fx:id="partInventoryLevelColumn" prefWidth="229.0" text="Inventory Level" />
-                                          <TableColumn fx:id="priceCostColumn" prefWidth="267.0" text="Price/Cost Per Unit" />
+                                          <TableColumn fx:id="partPriceCostColumn" prefWidth="267.0" text="Price/Cost Per Unit" />
                                       </columns>
                                     </TableView>
                                  </center>
@@ -110,17 +109,33 @@
                                  <top>
                                     <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <Label text="Product Managemnt" textFill="#da535c">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                             <padding>
-                                                <Insets left="10.0" />
-                                             </padding>
-                                          </Label>
-                                          <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                                          <Button alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="23.0" prefWidth="61.0" text="Search" />
-                                          <TextField promptText="Enter Part ID" />
+                                          <ToolBar prefHeight="0.0" prefWidth="1000.0">
+                                            <items>
+                                                <Label text="Product Managemnt" textFill="#da535c">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Region prefHeight="27.0" prefWidth="449.0" />
+                                                <Button fx:id="buttonClearProductSearch" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clearTextFieldProductSearch" prefHeight="26.0" prefWidth="0.0" styleClass="buttonSearchClear">
+                                                   <graphic>
+                                                      <FontAwesomeIconView styleClass="buttonSearchClearIcon" />
+                                                   </graphic>
+                                                </Button>
+                                                <CustomTextField fx:id="textFieldProductSearch" prefHeight="27.0" prefWidth="240.0" styleClass="searchField">
+                                                    <left>
+                                                        <Label styleClass="searchBoxLabel">
+                                                            <graphic>
+                                                                <FontAwesomeIconView styleClass="searchBoxLabelIcon" />
+                                                            </graphic>
+                                                        </Label>
+                                                    </left>
+                                                </CustomTextField>
+                                            </items>
+                                          </ToolBar>
                                        </children>
                                     </HBox>
                                  </top>
@@ -128,8 +143,8 @@
                                     <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <buttons>
                                           <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showAddProduct" text="Add" />
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Modify" />
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Delete" />
+                                          <Button fx:id="productDeleteButton" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" text="Modify" />
+                                          <Button fx:id="productModifyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#deleteProductButtonPressed" text="Delete" />
                                        </buttons>
                                        <padding>
                                           <Insets right="10.0" />
@@ -137,12 +152,12 @@
                                     </ButtonBar>
                                  </bottom>
                                  <center>
-                                    <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                    <TableView fx:id="productTableView" onMouseClicked="#userClickedOnProductTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <columns>
-                                          <TableColumn prefWidth="250.0" text="Product ID" />
-                                          <TableColumn prefWidth="250.0" text="Product Name" />
-                                          <TableColumn prefWidth="250.0" text="Inventory Level" />
-                                          <TableColumn prefWidth="250.0" text="Price Per Unit" />
+                                          <TableColumn fx:id="productIDColumn" prefWidth="250.0" text="Product ID" />
+                                          <TableColumn fx:id="productNameColumn" prefWidth="250.0" text="Product Name" />
+                                          <TableColumn fx:id="productInventoryLevelColumn" prefWidth="250.0" text="Inventory Level" />
+                                          <TableColumn fx:id="productPriceCostColumn" prefWidth="250.0" text="Price Per Unit" />
                                        </columns>
                                     </TableView>
                                  </center>

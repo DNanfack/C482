@@ -3,11 +3,9 @@ package C482.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
 public class Inventory {
     private ObservableList<Product> products;
-    private ObservableList<Part> allParts;
+    private ObservableList<Part> parts;
     private int productID;
     private int partID;
 
@@ -16,7 +14,7 @@ public class Inventory {
      */
     public Inventory() {
         this.products = FXCollections.observableArrayList();
-        this.allParts = FXCollections.observableArrayList();
+        this.parts = FXCollections.observableArrayList();
     }
 
     // ************ METHODS *************************
@@ -28,23 +26,14 @@ public class Inventory {
 
     /**
      * Searches for productID in products list and removes it if it finds it
-     * @param productID ID of product to remove
      * @return Returns true if successfully removed, false if not found.
      */
-    public boolean removeProduct(int productID) {
-        // For each item in products ArrayList
-        for(int i = 0; i < products.size(); i++) {
-            // If productID exists in array
-            if(products.get(i).getProductID() == productID) {
-                products.remove(i);
-                return true;
-            }
-        }
-        return false;
+    public boolean removeProduct(Product product) {
+        return products.remove(product);
     }
 
     public boolean removePart(Part part) {
-        return allParts.remove(part);
+        return parts.remove(part);
     }
 
     public Product lookupProduct(int productID) {
@@ -65,17 +54,17 @@ public class Inventory {
     }
 
     public void addPart(Part part) {
-        allParts.add(part);
+        parts.add(part);
         partID++;
     }
 
     public boolean deletePart(Part part) {
-        return allParts.remove(part);
+        return parts.remove(part);
     }
 
     public Part lookupPart(int partID) {
-        for(int i = 0; i < allParts.size(); i++) {
-            Part p = allParts.get(i);
+        for(int i = 0; i < parts.size(); i++) {
+            Part p = parts.get(i);
             if(p.getPartID() == partID) {
                 return p;
             }
@@ -92,15 +81,18 @@ public class Inventory {
     }
 
     public void updatePart(Part partToUpdate) {
-        for(int i = 0; i < allParts.size(); i++) {
-            if(allParts.get(i).getPartID() == partToUpdate.getPartID()) { // Match found
-                allParts.set(i, partToUpdate);
+        for(int i = 0; i < parts.size(); i++) {
+            if(parts.get(i).getPartID() == partToUpdate.getPartID()) { // Match found
+                parts.set(i, partToUpdate);
                 break;
             }
         }
     }
 
-    public ObservableList<Part> getAllParts() {
-        return this.allParts;
+    public ObservableList<Part> getParts() {
+        return this.parts;
+    }
+    public ObservableList<Product> getProducts() {
+        return this.products;
     }
 }
