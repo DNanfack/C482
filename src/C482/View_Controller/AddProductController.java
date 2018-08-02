@@ -4,6 +4,7 @@ import C482.Main;
 import C482.Model.Inventory;
 import C482.Model.Part;
 import C482.Model.Product;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -24,16 +25,19 @@ import java.util.ResourceBundle;
 public class AddProductController implements Initializable {
     private Inventory inventory;
     private BorderPane rootLayout;
-    private ObservableList<Part> partsToAddToProduct;
+    private ObservableList<Part> partsAvailable, partsToAddToProduct;
 
     @FXML TextField  productNameTextField, inventoryTextField, priceCostTextField, maxTextField, minTextField;
     @FXML TextField textFieldAvailablePartsSearch, textFieldPartsToAddSearch;
     @FXML TableView<Part> tableViewAvailableParts, tableViewPartsToAdd;
     @FXML TableColumn columnAvailablePartsID, columnAvailablePartsName, columnAvailablePartsInventory, columnAvailablePartsPrice;
+    @FXML TableColumn columnPartsToAddID, columnPartsToAddName, columnPartsToAddInventory, columnPartsToAddPrice;
 
     public AddProductController(Inventory inventory, BorderPane rootLayout) {
         this.inventory = inventory;
         this.rootLayout = rootLayout;
+        this.partsAvailable = inventory.getParts();
+        this.partsToAddToProduct = FXCollections.observableArrayList();
     }
 
     public void showMainScreen() throws IOException {
@@ -81,11 +85,27 @@ public class AddProductController implements Initializable {
      }
 
      public void addPartToProductButtonPressed() {
+        ObservableList<Part> selectedRows = tableViewAvailableParts.getSelectionModel().getSelectedItems();
+        for(Part part: selectedRows) {
+            partsAvailable.remove(part);
+            partsToAddToProduct.add(part);
+        }
+        tableViewPartsToAdd.refresh();
+        tableViewAvailableParts.refresh();
+     }
 
+     public void removePartToProductButtonPressed() {
+        ObservableList<Part> selectedRows = tableViewPartsToAdd.getSelectionModel().getSelectedItems();
+        for(Part part: selectedRows) {
+            partsToAddToProduct.remove(part);
+            partsAvailable.add(part);
+        }
+        tableViewPartsToAdd.refresh();
+        tableViewAvailableParts.refresh();
      }
 
      public void showAvailablePartsTableData() {
-         FilteredList<Part> filteredAvailableParts = new FilteredList<>(inventory.getParts(), p -> true);
+         FilteredList<Part> filteredAvailableParts = new FilteredList<>(partsAvailable, p -> true);
          textFieldAvailablePartsSearch.textProperty().addListener((observable, oldValue, newValue) -> {
              filteredAvailableParts.setPredicate(part -> {
                  if(newValue == null || newValue.isEmpty()) {
@@ -116,7 +136,34 @@ public class AddProductController implements Initializable {
      }
 
      public void showPartsToAddTableData() {
+         FilteredList<Part> filteredPartsToAdd = new FilteredList<>(partsToAddToProduct, p -> true);
+         textFieldPartsToAddSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+             filteredPartsToAdd.setPredicate(part -> {
+                 if(newValue == null || newValue.isEmpty()) {
+                     return true;
+                 }
 
+                 // Build filters for search
+                 String lowerCaseFilter = newValue.toLowerCase();
+
+                 if(part.getName().toLowerCase().contains(lowerCaseFilter)){
+                     return true;
+                 } else if(String.valueOf(part.getPartID()).contains(lowerCaseFilter)) {
+                     return true;
+                 }
+                 return false;
+             });
+         });
+
+         // Wrap filtered list in sorted list
+         SortedList<Part> sortedPartsToAdd = new SortedList<>(filteredPartsToAdd);
+
+         sortedPartsToAdd.comparatorProperty().bind(tableViewPartsToAdd.comparatorProperty());
+         columnPartsToAddID.setCellValueFactory(new PropertyValueFactory<Part, String>("partID"));
+         columnPartsToAddName.setCellValueFactory(new PropertyValueFactory<Part, String>("name"));
+         columnPartsToAddInventory.setCellValueFactory(new PropertyValueFactory<Part, String>("inStock"));
+         columnPartsToAddPrice.setCellValueFactory(new PropertyValueFactory<Part, String>("price"));
+         tableViewPartsToAdd.setItems(sortedPartsToAdd);
      }
 
     @Override
@@ -127,6 +174,6 @@ public class AddProductController implements Initializable {
         tableViewAvailableParts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         showAvailablePartsTableData();
-        // showPartsToAddTableData();
+        showPartsToAddTableData();
     }
 }

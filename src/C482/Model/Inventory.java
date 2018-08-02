@@ -32,8 +32,16 @@ public class Inventory {
         return products.remove(product);
     }
 
+    public boolean removeProducts(ObservableList<Product> products) {
+        return this.products.removeAll(products);
+    }
+
     public boolean removePart(Part part) {
         return parts.remove(part);
+    }
+
+    public boolean removeParts(ObservableList<Part> parts) {
+        return this.parts.removeAll(parts);
     }
 
     public Product lookupProduct(int productID) {
