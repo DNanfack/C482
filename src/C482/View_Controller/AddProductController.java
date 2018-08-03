@@ -36,7 +36,7 @@ public class AddProductController implements Initializable {
     public AddProductController(Inventory inventory, BorderPane rootLayout) {
         this.inventory = inventory;
         this.rootLayout = rootLayout;
-        this.partsAvailable = inventory.getParts();
+        this.partsAvailable = FXCollections.observableArrayList(inventory.getParts());
         this.partsToAddToProduct = FXCollections.observableArrayList();
     }
 
@@ -86,20 +86,25 @@ public class AddProductController implements Initializable {
 
      public void addPartToProductButtonPressed() {
         ObservableList<Part> selectedRows = tableViewAvailableParts.getSelectionModel().getSelectedItems();
-        for(Part part: selectedRows) {
+        partsToAddToProduct.addAll(selectedRows);
+        partsAvailable.removeAll(selectedRows);
+
+        /*for(Part part: selectedRows) {
             partsAvailable.remove(part);
             partsToAddToProduct.add(part);
-        }
+        }*/
         tableViewPartsToAdd.refresh();
         tableViewAvailableParts.refresh();
      }
 
      public void removePartToProductButtonPressed() {
         ObservableList<Part> selectedRows = tableViewPartsToAdd.getSelectionModel().getSelectedItems();
-        for(Part part: selectedRows) {
+        partsAvailable.addAll(selectedRows);
+        partsToAddToProduct.removeAll(selectedRows);
+        /*for(Part part: selectedRows) {
             partsToAddToProduct.remove(part);
             partsAvailable.add(part);
-        }
+        }*/
         tableViewPartsToAdd.refresh();
         tableViewAvailableParts.refresh();
      }
