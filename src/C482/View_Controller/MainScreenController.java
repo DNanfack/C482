@@ -86,7 +86,7 @@ public class MainScreenController implements Initializable {
         for(Part part: selectedRows){
             partsToDelete.append(part.getName()).append("\n");
         }
-        alert.setContentText("Remove Parts:\n" + partsToDelete);
+        alert.setContentText("Remove Parts:\n\n" + partsToDelete);
         Optional<ButtonType> optional = alert.showAndWait();
         if(optional.get() == ButtonType.OK) {
             //partList.removeAll(selectedRows);
@@ -109,7 +109,7 @@ public class MainScreenController implements Initializable {
         for(Product product: selectedRows){
             productsToDelete.append(product.getName()).append("\n");
         }
-        alert.setContentText("Remove Parts:\n" + productsToDelete);
+        alert.setContentText("Remove Products:\n\n" + productsToDelete);
         Optional<ButtonType> optional = alert.showAndWait();
         if(optional.get() == ButtonType.OK) {
             // productList.removeAll(selectedRows);

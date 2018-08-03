@@ -54,10 +54,12 @@ public class Inventory {
         return null;
     }
 
-    public void updateProduct(int productID) {
-        Product p = lookupProduct(productID);
-        if(p != null){
-            p.setProductID(productID);
+    public void updateProduct(Product productToUpdate) {
+        for(int i = 0; i < products.size(); i++) {
+            if(products.get(i).getProductID() == productToUpdate.getProductID()) { // Match found
+                products.set(i, productToUpdate);
+                break;
+            }
         }
     }
 

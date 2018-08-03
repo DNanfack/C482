@@ -80,6 +80,7 @@ public class AddProductController implements Initializable {
         }
         Product p = saveProduct();
         p.setProductID(inventory.getProductID());
+        p.setAssociatedParts(partsToAddToProduct);
         inventory.addProduct(p);
         showMainScreen();
      }

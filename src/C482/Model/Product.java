@@ -38,12 +38,19 @@ public class Product {
 
     /**
      * Takes a part ID and removes the part from the product.
-     * @param partID ID of the part to remove
+     * @param part Part you want to remove
      * @return Returns TRUE if successfully removed, false if not found.
      */
-    public boolean removeAssociatedPart(int partID) {
-        //TODO: Write method
-        return true; //REMOVE
+    public boolean removeAssociatedPart(Part part) {
+        return associatedParts.remove(part);
+    }
+
+    public boolean removeAssociatedParts(ObservableList<Part> parts) {
+        return associatedParts.removeAll(parts);
+    }
+
+    public boolean setAssociatedParts(ObservableList<Part> parts) {
+        return this.associatedParts.setAll(parts);
     }
 
     /**

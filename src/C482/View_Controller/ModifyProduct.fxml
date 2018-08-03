@@ -68,12 +68,12 @@
                                     <Insets left="10.0" />
                                  </padding>
                               </Label>
-                              <TextField disable="true" editable="false" promptText="Auto Generated" GridPane.columnIndex="1" />
+                              <TextField fx:id="productIDTextField" disable="true" editable="false" GridPane.columnIndex="1" />
                               <TextField fx:id="productNameTextField" promptText="Product Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="inventoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="priceCostTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="maxTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <TextField fx:id="minTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

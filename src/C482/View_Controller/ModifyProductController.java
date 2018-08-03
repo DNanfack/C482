@@ -27,7 +27,7 @@ public class ModifyProductController implements Initializable {
     private Product productToModify;
     private ObservableList<Part> partsAvailable, partsToAddToProduct;
 
-    @FXML TextField productNameTextField, inventoryTextField, priceCostTextField, maxTextField, minTextField;
+    @FXML TextField productNameTextField, inventoryTextField, priceCostTextField, maxTextField, minTextField, productIDTextField;
     @FXML TextField textFieldAvailablePartsSearch, textFieldPartsToAddSearch;
     @FXML TableView<Part> tableViewAvailableParts, tableViewPartsToAdd;
     @FXML TableColumn columnAvailablePartsID, columnAvailablePartsName, columnAvailablePartsInventory, columnAvailablePartsPrice;
@@ -66,14 +66,17 @@ public class ModifyProductController implements Initializable {
         }
     }
 
-    private Product saveProduct() {
-        Product p = new Product();
-        p.setName(productNameTextField.getText());
-        p.setInStock(Integer.parseInt(inventoryTextField.getText()));
-        p.setPrice(Double.parseDouble(priceCostTextField.getText()));
-        p.setMin(Integer.parseInt(minTextField.getText()));
-        p.setMax(Integer.parseInt(maxTextField.getText()));
-        return p;
+    private void saveProduct() {
+        // Update fields
+        productToModify.setName(productNameTextField.getText());
+        productToModify.setInStock(Integer.parseInt(inventoryTextField.getText()));
+        productToModify.setPrice(Double.parseDouble(priceCostTextField.getText()));
+        productToModify.setMin(Integer.parseInt(minTextField.getText()));
+        productToModify.setMax(Integer.parseInt(maxTextField.getText()));
+
+        // Update parts
+        productToModify.setAssociatedParts(partsToAddToProduct);
+        inventory.updateProduct(productToModify);
     }
 
     public void saveButtonPressed() throws IOException {
@@ -82,9 +85,7 @@ public class ModifyProductController implements Initializable {
             Alerts.warningAlert("The name field is blank!");
             productNameTextField.setStyle("-fx-border-color: #ba171c;");
         }
-        Product p = saveProduct();
-        p.setProductID(inventory.getProductID());
-        inventory.addProduct(p);
+        saveProduct();
         showMainScreen();
     }
 
@@ -175,6 +176,15 @@ public class ModifyProductController implements Initializable {
         tableViewPartsToAdd.setItems(sortedPartsToAdd);
     }
 
+    public void showProductData() {
+        productNameTextField.setText(productToModify.getName());
+        productIDTextField.setText(Integer.toString(productToModify.getProductID()));
+        inventoryTextField.setText(Integer.toString(productToModify.getInStock()));
+        priceCostTextField.setText(Double.toString(productToModify.getPrice()));
+        maxTextField.setText(Integer.toString(productToModify.getMax()));
+        minTextField.setText(Integer.toString(productToModify.getMin()));
+    }
+
     public void buttonClearPartsAvailableSearchPressed() {
         textFieldAvailablePartsSearch.clear();
     }
@@ -191,5 +201,6 @@ public class ModifyProductController implements Initializable {
 
         showAvailablePartsTableData();
         showPartsToAddTableData();
+        showProductData();
     }
 }
