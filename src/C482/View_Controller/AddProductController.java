@@ -171,6 +171,14 @@ public class AddProductController implements Initializable {
          tableViewPartsToAdd.setItems(sortedPartsToAdd);
      }
 
+     public void buttonClearPartsAvailableSearchPressed() {
+         textFieldAvailablePartsSearch.clear();
+     }
+
+     public void buttonClearPartsToAddSearchPressed() {
+        textFieldPartsToAddSearch.clear();
+     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tableViewPartsToAdd.setEditable(true);

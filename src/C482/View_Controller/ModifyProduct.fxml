@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C482.View_Controller.ModifyProductController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" stylesheets="@modena_dark.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -68,9 +68,9 @@
                                     <Insets left="10.0" />
                                  </padding>
                               </Label>
-                              <TextField editable="false" promptText="Auto Generated" GridPane.columnIndex="1" />
-                              <TextField promptText="Product Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField disable="true" editable="false" promptText="Auto Generated" GridPane.columnIndex="1" />
+                              <TextField fx:id="productNameTextField" promptText="Product Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="inventoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
@@ -91,8 +91,8 @@
                                        <top>
                                           <HBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <Button mnemonicParsing="false" text="Search" />
-                                                <TextField promptText="Part ID" />
+                                                <Button mnemonicParsing="false" text="X" />
+                                                <TextField promptText="Part ID or Part Name" />
                                              </children>
                                              <padding>
                                                 <Insets right="10.0" />
@@ -110,9 +110,9 @@
                                           </ButtonBar>
                                        </bottom>
                                        <center>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                          <AnchorPane prefHeight="296.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView prefHeight="190.0" prefWidth="737.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                                                    <columns>
                                                       <TableColumn prefWidth="195.0" text="Part ID" />
                                                       <TableColumn prefWidth="195.0" text="Part Name" />
@@ -132,8 +132,8 @@
                                        <top>
                                           <HBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <Button mnemonicParsing="false" text="Search" />
-                                                <TextField promptText="Part ID" />
+                                                <Button mnemonicParsing="false" text="X" />
+                                                <TextField promptText="Part ID or Part Name" />
                                              </children>
                                              <padding>
                                                 <Insets right="10.0" />
@@ -143,7 +143,7 @@
                                        <bottom>
                                           <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <buttons>
-                                                <Button mnemonicParsing="false" text="Delete" />
+                                                <Button mnemonicParsing="false" text="Remove" />
                                              </buttons>
                                              <BorderPane.margin>
                                                 <Insets right="10.0" />
