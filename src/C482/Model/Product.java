@@ -84,6 +84,10 @@ public class Product {
         return productID.getValue();
     }
 
+    public ObservableList<Part> getAssociatedParts() {
+        return this.associatedParts;
+    }
+
     public String getName() {
         return name.getValue();
     }

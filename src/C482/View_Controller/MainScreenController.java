@@ -140,6 +140,28 @@ public class MainScreenController implements Initializable {
         rootLayout.setCenter(addProduct);
     }
 
+    public void showModifyProduct(Product productToModify) throws IOException {
+        // Instantiate the controller and give it access to inventory
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("View_Controller/ModifyProduct.fxml"));
+        ModifyProductController controller = new ModifyProductController(inventory, rootLayout, productToModify);
+        loader.setController(controller);
+
+        AnchorPane modifyProduct = loader.load();
+        rootLayout.setCenter(modifyProduct);
+    }
+
+    public void modifyProductButtonPressed() throws IOException{
+        // Only allow single object selection
+        ObservableList<Product> selectedRows = productTableView.getSelectionModel().getSelectedItems();
+        if(selectedRows.size() > 1) {
+            Alerts.warningAlert("You can only modify one item at a time.");
+        } else {
+            Product productToModify = productTableView.getSelectionModel().getSelectedItem();
+            showModifyProduct(productToModify);
+        }
+    }
+
     public void selectTab(String tab) {
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         switch (tab) {
@@ -248,8 +270,10 @@ public class MainScreenController implements Initializable {
         // Allows editing for table and selecting multiple rows
         partTableView.setEditable(true);
         partTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        partTableView.setPlaceholder(new Label("No parts found."));
         productTableView.setEditable(true);
         productTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        productTableView.setPlaceholder(new Label("No products found."));
         setPartTableColumnWidth();
         showPartTableData();
         showProductTableData();

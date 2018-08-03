@@ -143,8 +143,8 @@
                                     <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <buttons>
                                           <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showAddProduct" text="Add" />
-                                          <Button fx:id="productDeleteButton" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" text="Modify" />
-                                          <Button fx:id="productModifyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#deleteProductButtonPressed" text="Delete" />
+                                          <Button fx:id="productModifyButton" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyProductButtonPressed" text="Modify" />
+                                          <Button fx:id="productDeleteButton" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#deleteProductButtonPressed" text="Delete" />
                                        </buttons>
                                        <padding>
                                           <Insets right="10.0" />

@@ -87,7 +87,7 @@
                            <children>
                               <AnchorPane prefHeight="226.0" prefWidth="747.0">
                                  <children>
-                                    <BorderPane prefHeight="260.0" prefWidth="747.0" AnchorPane.bottomAnchor="-34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <BorderPane prefHeight="236.0" prefWidth="747.0" AnchorPane.bottomAnchor="-10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <top>
                                           <HBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
@@ -110,7 +110,7 @@
                                           </ButtonBar>
                                        </bottom>
                                        <center>
-                                          <AnchorPane prefHeight="231.0" prefWidth="747.0" BorderPane.alignment="CENTER">
+                                          <AnchorPane prefHeight="197.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
                                                 <TableView fx:id="tableViewAvailableParts" prefHeight="182.0" prefWidth="737.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                                                   <columns>
@@ -128,7 +128,7 @@
                               </AnchorPane>
                               <AnchorPane prefHeight="181.0" prefWidth="747.0">
                                  <children>
-                                    <BorderPane layoutY="39.0" prefHeight="248.0" prefWidth="747.0" AnchorPane.bottomAnchor="-106.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
+                                    <BorderPane layoutY="39.0" prefHeight="226.0" prefWidth="747.0" AnchorPane.bottomAnchor="-84.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
                                        <top>
                                           <HBox alignment="TOP_RIGHT" prefHeight="1.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
