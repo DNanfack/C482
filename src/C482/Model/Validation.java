@@ -3,40 +3,44 @@ package C482.Model;
 import java.util.ArrayList;
 
 public class Validation {
-    private ArrayList<String> results;
 
-    public Validation() {
-        results = new ArrayList<>();
-    }
-
-    /**
-     * Validate Name
-     * @param name
-     */
-    public void validateName(String name) {
+    public static String validateName(String name) {
+        StringBuilder errors = new StringBuilder();
         // Ensure name is not null
-        if(name == null) {
-            results.add("Name must contain at least 1 character.");
+        if(name.isEmpty()) {
+            errors.append("Name must contain at least 1 character.");
         }
+        return errors.toString();
     }
 
-    // validate price is parsable
-    public void validatePrice(String price) {
-        double p;
+    public static String validatePrice(String price) {
+        StringBuilder errors = new StringBuilder();
+        double dPrice;
 
-        if(doubleValid(price)) {
-            p = Double.parseDouble(price);
-        } else {
-            return;
+        // Make sure price doesn't contain dollar sign
+        if(price.contains("$")){
+            errors.append("Please do not include dollar sign in price");
+            return errors.toString();
         }
-        if(p < 0) {
-            results.add("Price must be greater than 0.");
+        // Validate price is parsable
+        if(!doubleValid(price)) {
+            errors.append("Price is not in valid format.");
+            return errors.toString();
         }
+        dPrice = Double.parseDouble(price);
+
+        // Validate price is positive
+        if(dPrice < 0 ) {
+            errors.append("Price must be greater than 0.");
+        }
+
+        return errors.toString();
     }
 
-    public void validateMinMax(String min, String max) {
+    public static String validateMinMax(String min, String max) {
         int minInt;
         int maxInt;
+        StringBuilder errors = new StringBuilder();
 
         if(intValid(min) && intValid(max)) { // Both min and max are valid integers
             minInt = Integer.parseInt(min);
@@ -44,46 +48,51 @@ public class Validation {
 
             // validate max is positive
             if(maxInt < 0) {
-                results.add("Max value must be greater than 0.");
+                errors.append("Max value must be greater than 0.");
+                return errors.toString();
             }
 
             // validate min is positive
             if(minInt < 0) {
-                results.add("Min value must be greater than 0.");
+                errors.append("Min value must be greater than 0.");
+                return errors.toString();
             }
 
             // validate max is greater than min
             if(maxInt < minInt ) {
-                results.add("Min value must be less than Max value.");
+                errors.append("Min value must be less than Max value.");
+                return errors.toString();
             }
+        } else {
+            errors.append("Invalid format.  Please enter integer.");
+            return errors.toString();
         }
+        return errors.toString();
     }
 
-    public void validateProduct(Product prodValue) {
-        // validate product has at least one part
-        if(prodValue.getNumParts() < 1) {
-            results.add("Product must contain at least one part.");
+    public static String validateDeleteProduct(Product product) {
+        StringBuilder errors = new StringBuilder();
+        if(product.getNumParts() > 0) {
+            errors.append("Cannot delete Product with a part attached. Remove all parts and try again.");
         }
+        return errors.toString();
     }
 
-    public void validateDeleteProduct(Product prodValue) {
-        if(prodValue.getNumParts() > 0) {
-            results.add("Cannot delete Product with a part attached.  Remove part and try again.");
+    public static String validateInventory(String numInventory) {
+        StringBuilder errors = new StringBuilder();
+        if(!intValid(numInventory)) {
+            errors.append("Inventory must be in an integer format.");
+            return errors.toString();
         }
+        int parsedInv = Integer.parseInt(numInventory);
+        if(parsedInv < 1) {
+            errors.append("Inventory must be a positive number.");
+            return errors.toString();
+        }
+        return errors.toString();
     }
 
-    public int getNumErrors() {
-        return results.size();
-    }
-
-    public void runAllValidation(String name, String price, String inStock, String min, String max) {
-        validateName(name);
-        validatePrice(price);
-    }
-
-    //TODO: Add required option for product name, price, and inventory
-
-    private boolean intValid(String intValue) {
+    public static boolean intValid(String intValue) {
         try {
             Integer.parseInt(intValue);
         } catch (NumberFormatException e ) {
@@ -92,7 +101,7 @@ public class Validation {
         return true;
     }
 
-    private boolean doubleValid(String doubleValue) {
+    public static boolean doubleValid(String doubleValue) {
         try {
             Double.parseDouble(doubleValue);
         } catch (NumberFormatException e ) {

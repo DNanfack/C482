@@ -128,6 +128,7 @@ public class ModifyPartController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         optionalRowLabel.setVisible(false);
         optionalRowTextfield.setVisible(false);
+        priceCostTextField.setTooltip(new Tooltip("Price will auto round to two decimal places."));
         partIDTextField.setDisable(true);
         showPartData();
     }

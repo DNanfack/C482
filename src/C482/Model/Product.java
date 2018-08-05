@@ -115,6 +115,14 @@ public class Product {
         return max.getValue();
     }
 
+    public double getTotalCost() {
+        double totalCost = 0;
+        for(Part part: associatedParts) {
+            totalCost += part.getPrice();
+        }
+        return totalCost;
+    }
+
     public int getNumParts() {
         return numParts.getValue();
     }

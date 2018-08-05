@@ -186,6 +186,7 @@ public class AddProductController implements Initializable {
         tableViewAvailableParts.setEditable(true);
         tableViewPartsToAdd.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableViewAvailableParts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        priceCostTextField.setTooltip(new Tooltip("Price will auto round to two decimal places."));
 
         showAvailablePartsTableData();
         showPartsToAddTableData();

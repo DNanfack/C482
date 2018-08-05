@@ -1,10 +1,7 @@
 package C482.View_Controller;
 
 import C482.Main;
-import C482.Model.InhousePart;
-import C482.Model.Inventory;
-import C482.Model.OutsourcedPart;
-import C482.Model.Part;
+import C482.Model.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -19,9 +16,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import C482.Model.Validation.*;
 
 public class AddPartController implements Initializable {
-    private Main main;
     private Inventory inventory;
     private BorderPane rootLayout;
     private boolean inHousePart;
@@ -104,22 +101,75 @@ public class AddPartController implements Initializable {
     }
 
     public void saveButtonPressed() throws IOException {
+        boolean partIsValid = true;
+        StringBuilder errors = new StringBuilder();
         // if any fields are empty, underline field.
-        if(partNameTextField.getText().isEmpty()) {
-            Alerts.warningAlert("The name field is blank!");
+        String nameValidation = Validation.validateName(partNameTextField.getText());
+        if(!nameValidation.isEmpty()) {
+            errors.append(nameValidation);
+            errors.append("\n");
             partNameTextField.setStyle("-fx-border-color: #ba171c;");
+            partIsValid = false;
         }
-        Part p = savePart();
-        // Get partID from inventory
-        p.setPartID(inventory.getPartID());
-        inventory.addPart(p);
-        showMainScreen();
+
+        // Validate inventory number
+        String invValidation = Validation.validateInventory(inventoryTextField.getText());
+        if(!invValidation.isEmpty()) {
+            errors.append(invValidation);
+            errors.append("\n");
+            inventoryTextField.setStyle("-fx-border-color: #ba171c;");
+            partIsValid = false;
+        }
+
+        String priceValidation = Validation.validatePrice(priceCostTextField.getText());
+        if(!priceValidation.isEmpty()) {
+            errors.append(priceValidation);
+            errors.append("\n");
+            priceCostTextField.setStyle("-fx-border-color: #ba171c;");
+            partIsValid = false;
+        }
+
+        String minMaxValidation = Validation.validateMinMax(minTextField.getText(), maxTextField.getText());
+        if(!minMaxValidation.isEmpty()) {
+            errors.append(minMaxValidation);
+            errors.append("\n");
+            minTextField.setStyle("-fx-border-color: #ba171c;");
+            maxTextField.setStyle("-fx-border-color: #ba171c;");
+            partIsValid = false;
+        }
+
+        if(inHousePart) {
+            if(!Validation.intValid(optionalRowTextfield.getText())) {
+                errors.append("Machine ID must be a valid integer.");
+                errors.append("\n");
+                optionalRowTextfield.setStyle("-fx-border-color: #ba171c;");
+                partIsValid = false;
+            }
+        } else {
+            String validateCompanyName = Validation.validateName(optionalRowTextfield.getText());
+            if(!validateCompanyName.isEmpty()) {
+                errors.append(validateCompanyName);
+                errors.append("\n");
+                optionalRowTextfield.setStyle("-fx-border-color: #ba171c;");
+                partIsValid = false;
+            }
+        }
+        if(partIsValid) {
+            Part partToSave = savePart();
+            // Get partID from inventory
+            partToSave.setPartID(inventory.getPartID());
+            inventory.addPart(partToSave);
+            showMainScreen();
+        } else {
+            Alerts.warningAlert(errors.toString());
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         optionalRowLabel.setVisible(false);
         optionalRowTextfield.setVisible(false);
+        priceCostTextField.setTooltip(new Tooltip("Price will auto round to two decimal places."));
         inHouseRadio.fire();
         addPartRadioGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if(addPartRadioGroup.selectedToggleProperty() != null) {
