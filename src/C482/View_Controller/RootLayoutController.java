@@ -1,11 +1,18 @@
 package C482.View_Controller;
 
+import C482.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 
 public class RootLayoutController {
+    private Main main;
+    private boolean dummyDataLoaded;
+
+    public RootLayoutController(Main main) {
+        this.main = main;
+    }
 
     @FXML public MenuItem fileCloseMenuItem;
 
@@ -18,8 +25,7 @@ public class RootLayoutController {
     /**
      * Shows About Dialog
      */
-    @FXML
-    public void handleAbout() {
+    @FXML public void handleAbout() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("C482 Project");
         alert.setHeaderText("About");
@@ -27,5 +33,14 @@ public class RootLayoutController {
 
         // Show alert
         alert.showAndWait();
+    }
+
+    @FXML public void loadDummyData() {
+        if(!dummyDataLoaded){
+            main.generateDummyData();
+            dummyDataLoaded = true;
+        } else {
+            Alerts.warningAlert("Dummy data already loaded.");
+        }
     }
 }

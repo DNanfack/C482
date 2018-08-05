@@ -1,5 +1,7 @@
 package C482.Model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class Validation {
@@ -78,6 +80,18 @@ public class Validation {
         return errors.toString();
     }
 
+    public static String validateProductPrice(Product product) {
+        StringBuilder errors = new StringBuilder();
+        if(product.getTotalCost() > product.getPrice()) {
+            errors.append("Total cost of parts in product exceeds cost of product.  Either raise price of product or remove parts.");
+            errors.append("\n");
+            errors.append("Total cost: ");
+            errors.append(product.getTotalCost());
+            return errors.toString();
+        }
+        return errors.toString();
+    }
+
     public static String validateInventory(String numInventory) {
         StringBuilder errors = new StringBuilder();
         if(!intValid(numInventory)) {
@@ -108,5 +122,11 @@ public class Validation {
             return false;
         }
         return true;
+    }
+
+    public static double getRoundedPrice(String price) {
+        BigDecimal bd = new BigDecimal(price);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

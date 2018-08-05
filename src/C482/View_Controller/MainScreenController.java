@@ -96,6 +96,7 @@ public class MainScreenController implements Initializable {
     }
 
     public void deleteProductButtonPressed() {
+        boolean isDeletable = true;
         ObservableList<Product> selectedRows;
 
         // Gets selected rows
@@ -112,9 +113,17 @@ public class MainScreenController implements Initializable {
         alert.setContentText("Remove Products:\n\n" + productsToDelete);
         Optional<ButtonType> optional = alert.showAndWait();
         if(optional.get() == ButtonType.OK) {
-            // productList.removeAll(selectedRows);
-            inventory.removeProducts(selectedRows);
-            productTableView.getSelectionModel().clearSelection();
+            for(Product product: selectedRows) {
+                String validateDelete = Validation.validateDeleteProduct(product);
+                if(!validateDelete.isEmpty()) {
+                    Alerts.warningAlert(validateDelete);
+                    isDeletable = false;
+                }
+            }
+            if(isDeletable) {
+                inventory.removeProducts(selectedRows);
+                productTableView.getSelectionModel().clearSelection();
+            }
         }
     }
 

@@ -21,7 +21,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.inventory = new Inventory();
-        generateDummyData();
+        // generateDummyData();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("C482 Inventory Project");
         rootLayout = new BorderPane();
@@ -119,6 +119,8 @@ public class Main extends Application {
         // Load root layout fxml file
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("View_Controller/RootLayout.fxml"));
+        RootLayoutController controller = new RootLayoutController(this);
+        loader.setController(controller);
         rootLayout = loader.load();
 
         Scene scene = new Scene(rootLayout);

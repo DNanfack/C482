@@ -4,6 +4,7 @@ import C482.Main;
 import C482.Model.Inventory;
 import C482.Model.Part;
 import C482.Model.Product;
+import C482.Model.Validation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -66,23 +67,87 @@ public class AddProductController implements Initializable {
         Product p = new Product();
         p.setName(productNameTextField.getText());
         p.setInStock(Integer.parseInt(inventoryTextField.getText()));
-        p.setPrice(Double.parseDouble(priceCostTextField.getText()));
+        double price = Validation.getRoundedPrice(priceCostTextField.getText());
+        p.setPrice(price);
         p.setMin(Integer.parseInt(minTextField.getText()));
         p.setMax(Integer.parseInt(maxTextField.getText()));
         return p;
     }
 
     public void saveButtonPressed() throws IOException {
+        boolean productIsValid = true;
+        boolean priceIsValid = true;
+        StringBuilder errors = new StringBuilder();
         // if any fields are empty, underline field.
-        if(productNameTextField.getText().isEmpty()) {
-            Alerts.warningAlert("The name field is blank!");
+        // VALIDATE NAME
+        String nameValidation = Validation.validateName(productNameTextField.getText());
+        if(!nameValidation.isEmpty()) {
+            errors.append(nameValidation);
+            errors.append("\n");
             productNameTextField.setStyle("-fx-border-color: #ba171c;");
+            productIsValid = false;
+        } else {
+            productNameTextField.setStyle(null);
         }
-        Product p = saveProduct();
-        p.setProductID(inventory.getProductID());
-        p.setAssociatedParts(partsToAddToProduct);
-        inventory.addProduct(p);
-        showMainScreen();
+
+        // VALIDATE INVENTORY
+        String invValidation = Validation.validateInventory(inventoryTextField.getText());
+        if(!invValidation.isEmpty()) {
+            errors.append(invValidation);
+            errors.append("\n");
+            inventoryTextField.setStyle("-fx-border-color: #ba171c;");
+            productIsValid = false;
+        } else {
+            inventoryTextField.setStyle(null);
+        }
+
+        // VALIDATE PRICE
+        String priceValidation = Validation.validatePrice(priceCostTextField.getText());
+        if(!priceValidation.isEmpty()) {
+            errors.append(priceValidation);
+            errors.append("\n");
+            priceCostTextField.setStyle("-fx-border-color: #ba171c;");
+            productIsValid = false;
+        } else {
+            priceCostTextField.setStyle(null);
+        }
+
+        // VALIDATE MIN/MAX
+        String minMaxValidation = Validation.validateMinMax(minTextField.getText(), maxTextField.getText());
+        if(!minMaxValidation.isEmpty()) {
+            errors.append(minMaxValidation);
+            errors.append("\n");
+            minTextField.setStyle("-fx-border-color: #ba171c;");
+            maxTextField.setStyle("-fx-border-color: #ba171c;");
+            productIsValid = false;
+        } else {
+            minTextField.setStyle(null);
+            maxTextField.setStyle(null);
+        }
+
+        // VALIDATE TOTAL COST vs PRICE
+        if(productIsValid) {
+            Product p = saveProduct();
+            p.setAssociatedParts(partsToAddToProduct);
+            String validProductPrice = Validation.validateProductPrice(p);
+            if(!validProductPrice.isEmpty()) { // price is not valid.
+                errors.append(validProductPrice);
+                errors.append("\n");
+                priceCostTextField.setStyle("-fx-border-color: #ba171c;");
+                priceIsValid = false;
+            } else {
+                priceCostTextField.setStyle(null);
+            }
+            if(priceIsValid) {
+                p.setProductID(inventory.getProductID());
+                inventory.addProduct(p);
+                showMainScreen();
+            } else {
+                Alerts.warningAlert(errors.toString());
+            }
+        } else {
+            Alerts.warningAlert(errors.toString());
+        }
      }
 
      public void addPartToProductButtonPressed() {

@@ -1,10 +1,7 @@
 package C482.View_Controller;
 
 import C482.Main;
-import C482.Model.InhousePart;
-import C482.Model.Inventory;
-import C482.Model.OutsourcedPart;
-import C482.Model.Part;
+import C482.Model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,6 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -85,27 +84,94 @@ public class ModifyPartController implements Initializable {
     }
 
     public void saveButtonPressed() throws IOException {
+        boolean partIsValid = true;
+        StringBuilder errors = new StringBuilder();
         // if any fields are empty, underline field.
-        if(partNameTextField.getText().isEmpty()) {
-            Alerts.warningAlert("The name field is blank!");
+        String nameValidation = Validation.validateName(partNameTextField.getText());
+        if(!nameValidation.isEmpty()) {
+            errors.append(nameValidation);
+            errors.append("\n");
             partNameTextField.setStyle("-fx-border-color: #ba171c;");
+            partIsValid = false;
+        } else {
+            partNameTextField.setStyle(null);
         }
-        savePart();
-        showMainScreen();
+
+        // Validate inventory number
+        String invValidation = Validation.validateInventory(inventoryTextField.getText());
+        if(!invValidation.isEmpty()) {
+            errors.append(invValidation);
+            errors.append("\n");
+            inventoryTextField.setStyle("-fx-border-color: #ba171c;");
+            partIsValid = false;
+        } else {
+            inventoryTextField.setStyle(null);
+        }
+
+        String priceValidation = Validation.validatePrice(priceCostTextField.getText());
+        if(!priceValidation.isEmpty()) {
+            errors.append(priceValidation);
+            errors.append("\n");
+            priceCostTextField.setStyle("-fx-border-color: #ba171c;");
+            partIsValid = false;
+        } else {
+            priceCostTextField.setStyle(null);
+        }
+
+        String minMaxValidation = Validation.validateMinMax(minTextField.getText(), maxTextField.getText());
+        if(!minMaxValidation.isEmpty()) {
+            errors.append(minMaxValidation);
+            errors.append("\n");
+            minTextField.setStyle("-fx-border-color: #ba171c;");
+            maxTextField.setStyle("-fx-border-color: #ba171c;");
+            partIsValid = false;
+        } else {
+            minTextField.setStyle(null);
+            maxTextField.setStyle(null);
+        }
+
+        if(inHouseRadio.isArmed()) {
+            if(!Validation.intValid(optionalRowTextfield.getText())) {
+                errors.append("Machine ID must be a valid integer.");
+                errors.append("\n");
+                optionalRowTextfield.setStyle("-fx-border-color: #ba171c;");
+                partIsValid = false;
+            } else {
+                optionalRowTextfield.setStyle(null);
+            }
+        } else {
+            String validateCompanyName = Validation.validateName(optionalRowTextfield.getText());
+            if(!validateCompanyName.isEmpty()) {
+                errors.append(validateCompanyName);
+                errors.append("\n");
+                optionalRowTextfield.setStyle("-fx-border-color: #ba171c;");
+                partIsValid = false;
+            } else {
+                optionalRowTextfield.setStyle(null);
+            }
+        }
+        if(partIsValid) {
+            savePart();
+            // Get partID from inventory
+            partToModify.setPartID(inventory.getPartID());
+            showMainScreen();
+        } else {
+            Alerts.warningAlert(errors.toString());
+        }
     }
 
     private void savePart() {
         if(partToModify instanceof InhousePart) {
             partToModify.setName(partNameTextField.getText());
             partToModify.setInStock(Integer.parseInt(inventoryTextField.getText()));
-            partToModify.setPrice(Double.parseDouble(priceCostTextField.getText()));
+            partToModify.setPrice(Validation.getRoundedPrice(priceCostTextField.getText()));
             partToModify.setMin(Integer.parseInt(minTextField.getText()));
             partToModify.setMax(Integer.parseInt(maxTextField.getText()));
             ((InhousePart) partToModify).setMachineID(Integer.parseInt(optionalRowTextfield.getText()));
         } else {
             partToModify.setName(partNameTextField.getText());
             partToModify.setInStock(Integer.parseInt(inventoryTextField.getText()));
-            partToModify.setPrice(Double.parseDouble(priceCostTextField.getText()));
+            partToModify.setPrice(Validation.getRoundedPrice(priceCostTextField.getText()));
             partToModify.setMin(Integer.parseInt(minTextField.getText()));
             partToModify.setMax(Integer.parseInt(maxTextField.getText()));
             ((OutsourcedPart) partToModify).setCompanyName(optionalRowTextfield.getText());

@@ -12,7 +12,6 @@ public class Product {
     private final IntegerProperty inStock;
     private final IntegerProperty min;
     private final IntegerProperty max;
-    private final IntegerProperty numParts;
 
     /**
      * Constructor
@@ -25,7 +24,6 @@ public class Product {
         this.inStock = new SimpleIntegerProperty();
         this.min = new SimpleIntegerProperty();
         this.max = new SimpleIntegerProperty();
-        this.numParts = new SimpleIntegerProperty();
     }
 
     /**
@@ -124,6 +122,6 @@ public class Product {
     }
 
     public int getNumParts() {
-        return numParts.getValue();
+        return associatedParts.size();
     }
 }

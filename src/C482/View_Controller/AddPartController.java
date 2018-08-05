@@ -13,6 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -83,7 +85,8 @@ public class AddPartController implements Initializable {
             InhousePart p = new InhousePart();
             p.setName(partNameTextField.getText());
             p.setInStock(Integer.parseInt(inventoryTextField.getText()));
-            p.setPrice(Double.parseDouble(priceCostTextField.getText()));
+            // format price to 2 decimal places
+            p.setPrice(Validation.getRoundedPrice(priceCostTextField.getText()));
             p.setMin(Integer.parseInt(minTextField.getText()));
             p.setMax(Integer.parseInt(maxTextField.getText()));
             p.setMachineID(Integer.parseInt(optionalRowTextfield.getText()));
@@ -110,6 +113,8 @@ public class AddPartController implements Initializable {
             errors.append("\n");
             partNameTextField.setStyle("-fx-border-color: #ba171c;");
             partIsValid = false;
+        } else {
+            partNameTextField.setStyle(null);
         }
 
         // Validate inventory number
@@ -119,6 +124,8 @@ public class AddPartController implements Initializable {
             errors.append("\n");
             inventoryTextField.setStyle("-fx-border-color: #ba171c;");
             partIsValid = false;
+        } else {
+            inventoryTextField.setStyle(null);
         }
 
         String priceValidation = Validation.validatePrice(priceCostTextField.getText());
@@ -127,6 +134,8 @@ public class AddPartController implements Initializable {
             errors.append("\n");
             priceCostTextField.setStyle("-fx-border-color: #ba171c;");
             partIsValid = false;
+        } else {
+            priceCostTextField.setStyle(null);
         }
 
         String minMaxValidation = Validation.validateMinMax(minTextField.getText(), maxTextField.getText());
@@ -136,6 +145,9 @@ public class AddPartController implements Initializable {
             minTextField.setStyle("-fx-border-color: #ba171c;");
             maxTextField.setStyle("-fx-border-color: #ba171c;");
             partIsValid = false;
+        } else {
+            minTextField.setStyle(null);
+            maxTextField.setStyle(null);
         }
 
         if(inHousePart) {
@@ -144,6 +156,8 @@ public class AddPartController implements Initializable {
                 errors.append("\n");
                 optionalRowTextfield.setStyle("-fx-border-color: #ba171c;");
                 partIsValid = false;
+            } else {
+                optionalRowTextfield.setStyle(null);
             }
         } else {
             String validateCompanyName = Validation.validateName(optionalRowTextfield.getText());
@@ -152,6 +166,8 @@ public class AddPartController implements Initializable {
                 errors.append("\n");
                 optionalRowTextfield.setStyle("-fx-border-color: #ba171c;");
                 partIsValid = false;
+            } else {
+                optionalRowTextfield.setStyle(null);
             }
         }
         if(partIsValid) {
