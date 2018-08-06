@@ -1,3 +1,7 @@
+/*
+ * Author: Taylor Vories
+ * WGU C482 Project
+ */
 package C482.View_Controller;
 
 import C482.Main;
@@ -13,7 +17,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import org.controlsfx.control.textfield.CustomTextField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,13 +37,17 @@ public class MainScreenController implements Initializable {
     @FXML public TableColumn productIDColumn, productNameColumn, productInventoryLevelColumn, productPriceCostColumn;
     @FXML public Button partDeleteButton, productDeleteButton;
     @FXML public Button partModifyButton, productModifyButton;
-    @FXML private CustomTextField textFieldPartSearch, textFieldProductSearch;
+    @FXML private TextField textFieldPartSearch, textFieldProductSearch;
 
     public MainScreenController(Inventory inventory, BorderPane rootLayout) {
         this.inventory = inventory;
         this.rootLayout = rootLayout;
     }
 
+    /**
+     * Shows the AddPart scene
+     * @throws IOException If FXML fails to load
+     */
     public void showAddPart() throws IOException {
         // Instantiate the controller and give it access to inventory.
         FXMLLoader loader = new FXMLLoader();
@@ -52,6 +59,11 @@ public class MainScreenController implements Initializable {
         rootLayout.setCenter(addPart);
     }
 
+    /**
+     * Shows the ModifyPart scene
+     * @param partToModify The part selected to modify
+     * @throws IOException If FXML fails to load
+     */
     public void showModifyPart(Part partToModify) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("View_Controller/ModifyPart.fxml"));
@@ -63,18 +75,24 @@ public class MainScreenController implements Initializable {
     }
 
     /**
-     * Enable or disable buttons when table items are selected
+     * Enable or disable buttons when table items are selected.
      */
     public void userClickedOnPartTable() {
         this.partDeleteButton.setDisable(false);
         this.partModifyButton.setDisable(false);
     }
 
+    /**
+     * Enable or disable buttons when table items are selected.
+     */
     public void userClickedOnProductTable() {
         this.productDeleteButton.setDisable(false);
         this.productModifyButton.setDisable(false);
     }
 
+    /**
+     * Shows a confirmation dialog before deleting the selected part
+     */
     public void deletePartButtonPressed() {
         ObservableList<Part> selectedRows = partTableView.getSelectionModel().getSelectedItems();
 
@@ -89,12 +107,14 @@ public class MainScreenController implements Initializable {
         alert.setContentText("Remove Parts:\n\n" + partsToDelete);
         Optional<ButtonType> optional = alert.showAndWait();
         if(optional.get() == ButtonType.OK) {
-            //partList.removeAll(selectedRows);
             inventory.removeParts(selectedRows);
             partTableView.getSelectionModel().clearSelection();
         }
     }
 
+    /**
+     * Shows a confirmation dialog before deleting the selected product.
+     */
     public void deleteProductButtonPressed() {
         boolean isDeletable = true;
         ObservableList<Product> selectedRows;
@@ -127,6 +147,10 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Handles modify part button press. Validates only one part is selected.
+     * @throws IOException If FXML fails to load.
+     */
     public void modifyPartButtonPressed() throws IOException{
         // Only allow single object selection
         ObservableList<Part> selectedRows = partTableView.getSelectionModel().getSelectedItems();
@@ -138,6 +162,10 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Shows AddProduct screen.
+     * @throws IOException If FXML fails to load.
+     */
     public void showAddProduct() throws IOException {
         // Instantiate the controller and give it access to inventory
         FXMLLoader loader = new FXMLLoader();
@@ -149,6 +177,11 @@ public class MainScreenController implements Initializable {
         rootLayout.setCenter(addProduct);
     }
 
+    /**
+     * Shows modify product screen.
+     * @param productToModify The product to modify.
+     * @throws IOException If FXML fails to load.
+     */
     public void showModifyProduct(Product productToModify) throws IOException {
         // Instantiate the controller and give it access to inventory
         FXMLLoader loader = new FXMLLoader();
@@ -160,6 +193,10 @@ public class MainScreenController implements Initializable {
         rootLayout.setCenter(modifyProduct);
     }
 
+    /**
+     * Handles modify button pressed.
+     * @throws IOException If FXML fails to load
+     */
     public void modifyProductButtonPressed() throws IOException{
         // Only allow single object selection
         ObservableList<Product> selectedRows = productTableView.getSelectionModel().getSelectedItems();
@@ -171,6 +208,10 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Allows the interface to choose which tab to return to after changing scenes.
+     * @param tab
+     */
     public void selectTab(String tab) {
         SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
         switch (tab) {
@@ -186,9 +227,11 @@ public class MainScreenController implements Initializable {
         }
     }
 
+    /**
+     * Shows the parts in the inventory in the table view.
+     */
     private void showPartTableData() {
         // Only add items if the inventory is not empty.
-        // partList.addAll(inventory.getParts());
         // Add all parts to filtered list
         FilteredList<Part> filteredParts = new FilteredList<>(inventory.getParts(), p -> true);
         textFieldPartSearch.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -223,8 +266,10 @@ public class MainScreenController implements Initializable {
         partTableView.refresh();
     }
 
+    /**
+     * Shows the products in the inventory in the table view.
+     */
     public void showProductTableData() {
-        //productList.addAll(inventory.getProducts());
         // Add all products to filtered list
         FilteredList<Product> filteredProducts = new FilteredList<>(inventory.getProducts(), p -> true);
         textFieldProductSearch.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -259,14 +304,23 @@ public class MainScreenController implements Initializable {
         productTableView.refresh();
     }
 
+    /**
+     * Clears the search text box
+     */
     public void clearTextFieldPartSearch() {
         textFieldPartSearch.clear();
     }
 
+    /**
+     * Clears the search text box
+     */
     public void clearTextFieldProductSearch() {
         textFieldProductSearch.clear();
     }
 
+    /**
+     * Sets the column width to fit the entire space
+     */
     public void setPartTableColumnWidth() {
         partIDColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
         partNameColumn.prefWidthProperty().bind(partTableView.widthProperty().divide(4));
@@ -287,12 +341,4 @@ public class MainScreenController implements Initializable {
         showPartTableData();
         showProductTableData();
     }
-
-    /*private static final PseudoClass CLASS_FAIL
-            = PseudoClass.getPseudoClass("fail");
-
-    public static void updateStateClass(final Node node,
-                                        final boolean isFail) {
-        node.pseudoClassStateChanged(CLASS_FAIL, isFail);
-    }*/
 }

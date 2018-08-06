@@ -1,3 +1,7 @@
+/*
+ * Author: Taylor Vories
+ * WGU C482 Project
+ */
 package C482.View_Controller;
 
 import C482.Main;
@@ -35,6 +39,9 @@ public class RootLayoutController {
         alert.showAndWait();
     }
 
+    /**
+     * Menu option to load dummy data into inventory program.
+     */
     @FXML public void loadDummyData() {
         if(!dummyDataLoaded){
             main.generateDummyData();

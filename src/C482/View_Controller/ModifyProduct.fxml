@@ -91,7 +91,7 @@
                                        <top>
                                           <HBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#buttonClearPartsAvailableSearchPressed" text="X" />
+                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#buttonClearPartsAvailableSearchPressed" text="X" />
                                                 <TextField fx:id="textFieldAvailablePartsSearch" promptText="Part ID or Part Name" />
                                              </children>
                                              <padding>
@@ -102,7 +102,7 @@
                                        <bottom>
                                           <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <buttons>
-                                                <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#addPartToProductButtonPressed" text="Add" />
+                                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addPartToProductButtonPressed" text="Add" />
                                              </buttons>
                                              <BorderPane.margin>
                                                 <Insets right="10.0" />
@@ -132,7 +132,7 @@
                                        <top>
                                           <HBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#buttonClearPartsToAddSearchPressed" text="X" />
+                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#buttonClearPartsToAddSearchPressed" text="X" />
                                                 <TextField fx:id="textFieldPartsToAddSearch" promptText="Part ID or Part Name" />
                                              </children>
                                              <padding>
@@ -143,7 +143,7 @@
                                        <bottom>
                                           <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <buttons>
-                                                <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#removePartToProductButtonPressed" text="Remove" />
+                                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#removePartToProductButtonPressed" text="Remove" />
                                              </buttons>
                                              <BorderPane.margin>
                                                 <Insets right="10.0" />
@@ -191,8 +191,8 @@
          <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <buttons>
-                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveButtonPressed" text="Save" />
-                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#saveButtonPressed" text="Save" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cancelButtonPressed" text="Cancel" />
                </buttons>
                <padding>
                   <Insets right="10.0" />

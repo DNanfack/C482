@@ -1,3 +1,7 @@
+/*
+ * Author: Taylor Vories
+ * WGU C482 Project
+ */
 package C482.View_Controller;
 
 import C482.Main;
@@ -6,14 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -36,28 +37,38 @@ public class ModifyPartController implements Initializable {
     @FXML TextField minTextField;
     @FXML private TextField partIDTextField;
 
-    public ModifyPartController(Part partToModify, Inventory inventory, BorderPane rootLyout) {
+    ModifyPartController(Part partToModify, Inventory inventory, BorderPane rootLyout) {
         this.inventory = inventory;
         this.partToModify = partToModify;
         this.rootLayout = rootLyout;
     }
 
+    /**
+     * Sets Text Field and Label to InHouse specific
+     */
     public void showInHouseField() {
         optionalRowLabel.setText("Machine ID");
         optionalRowLabel.setVisible(true);
         optionalRowTextfield.setVisible(true);
     }
+
+    /**
+     * Sets the Text Field and Label to Outsourced specific
+     */
     public void showOutsourcedField() {
         optionalRowLabel.setText("Company Name");
         optionalRowLabel.setVisible(true);
         optionalRowTextfield.setVisible(true);
     }
 
+    /**
+     * Fills the interface with the part to modify's data.
+     */
     public void showPartData() {
         partNameTextField.setText(partToModify.getName());
         this.partIDTextField.setText((Integer.toString(partToModify.getPartID())));
         inventoryTextField.setText(Integer.toString(partToModify.getInStock()));
-        priceCostTextField.setText(Double.toString(partToModify.getPartID()));
+        priceCostTextField.setText(Double.toString(partToModify.getPrice()));
         maxTextField.setText(Integer.toString(partToModify.getMax()));
         minTextField.setText(Integer.toString(partToModify.getMin()));
         // Set optional text field based on part type
@@ -83,10 +94,15 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     * Handles save button press.  Validates part before saving.
+     * @throws IOException If FXML fails to load
+     */
     public void saveButtonPressed() throws IOException {
         boolean partIsValid = true;
         StringBuilder errors = new StringBuilder();
-        // if any fields are empty, underline field.
+
+        // Validate name
         String nameValidation = Validation.validateName(partNameTextField.getText());
         if(!nameValidation.isEmpty()) {
             errors.append(nameValidation);
@@ -97,17 +113,7 @@ public class ModifyPartController implements Initializable {
             partNameTextField.setStyle(null);
         }
 
-        // Validate inventory number
-        String invValidation = Validation.validateInventory(inventoryTextField.getText());
-        if(!invValidation.isEmpty()) {
-            errors.append(invValidation);
-            errors.append("\n");
-            inventoryTextField.setStyle("-fx-border-color: #ba171c;");
-            partIsValid = false;
-        } else {
-            inventoryTextField.setStyle(null);
-        }
-
+        // Validate price
         String priceValidation = Validation.validatePrice(priceCostTextField.getText());
         if(!priceValidation.isEmpty()) {
             errors.append(priceValidation);
@@ -118,6 +124,7 @@ public class ModifyPartController implements Initializable {
             priceCostTextField.setStyle(null);
         }
 
+        // Validate min/max
         String minMaxValidation = Validation.validateMinMax(minTextField.getText(), maxTextField.getText());
         if(!minMaxValidation.isEmpty()) {
             errors.append(minMaxValidation);
@@ -128,6 +135,19 @@ public class ModifyPartController implements Initializable {
         } else {
             minTextField.setStyle(null);
             maxTextField.setStyle(null);
+        }
+
+        // Validate inventory number
+        if(minMaxValidation.isEmpty()) {
+            String invValidation = Validation.validateInventory(inventoryTextField.getText(), minTextField.getText(), maxTextField.getText());
+            if(!invValidation.isEmpty()) {
+                errors.append(invValidation);
+                errors.append("\n");
+                inventoryTextField.setStyle("-fx-border-color: #ba171c;");
+                partIsValid = false;
+            } else {
+                inventoryTextField.setStyle(null);
+            }
         }
 
         if(inHouseRadio.isArmed()) {
@@ -160,6 +180,9 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     * Saves the part to the inventory if input is valid.
+     */
     private void savePart() {
         if(partToModify instanceof InhousePart) {
             partToModify.setName(partNameTextField.getText());
@@ -179,6 +202,10 @@ public class ModifyPartController implements Initializable {
         inventory.updatePart(partToModify);
     }
 
+    /**
+     * Shows the main screen
+     * @throws IOException If FXML fails to load.
+     */
     private void showMainScreen() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("View_Controller/MainScreen.fxml"));

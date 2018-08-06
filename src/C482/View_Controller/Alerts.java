@@ -1,3 +1,8 @@
+/*
+ * Author: Taylor Vories
+ * WGU C482 Project
+ * This class is an alert helper class to be shared between controllers.
+ */
 package C482.View_Controller;
 
 import javafx.scene.control.Alert;

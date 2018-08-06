@@ -1,9 +1,14 @@
+/*
+ * Author: Taylor Vories
+ * WGU C482 Project
+ */
 package C482.View_Controller;
 
 import C482.Main;
 import C482.Model.Inventory;
 import C482.Model.Part;
 import C482.Model.Product;
+import C482.Model.Validation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -55,6 +60,10 @@ public class ModifyProductController implements Initializable {
         controller.selectTab("products");
     }
 
+    /**
+     * Cancels without saving
+     * @throws IOException If FXML fails to load
+     */
     public void cancelButtonPressed() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel modify product?");
@@ -80,13 +89,85 @@ public class ModifyProductController implements Initializable {
     }
 
     public void saveButtonPressed() throws IOException {
+        boolean productIsValid = true;
+        boolean priceIsValid = true;
+        StringBuilder errors = new StringBuilder();
         // if any fields are empty, underline field.
-        if(productNameTextField.getText().isEmpty()) {
-            Alerts.warningAlert("The name field is blank!");
+        // VALIDATE NAME
+        String nameValidation = Validation.validateName(productNameTextField.getText());
+        if(!nameValidation.isEmpty()) {
+            errors.append(nameValidation);
+            errors.append("\n");
             productNameTextField.setStyle("-fx-border-color: #ba171c;");
+            productIsValid = false;
+        } else {
+            productNameTextField.setStyle(null);
         }
-        saveProduct();
-        showMainScreen();
+
+        // VALIDATE PRICE
+        String priceValidation = Validation.validatePrice(priceCostTextField.getText());
+        if(!priceValidation.isEmpty()) {
+            errors.append(priceValidation);
+            errors.append("\n");
+            priceCostTextField.setStyle("-fx-border-color: #ba171c;");
+            productIsValid = false;
+        } else {
+            priceCostTextField.setStyle(null);
+        }
+
+        // VALIDATE MIN/MAX
+        String minMaxValidation = Validation.validateMinMax(minTextField.getText(), maxTextField.getText());
+        if(!minMaxValidation.isEmpty()) {
+            errors.append(minMaxValidation);
+            errors.append("\n");
+            minTextField.setStyle("-fx-border-color: #ba171c;");
+            maxTextField.setStyle("-fx-border-color: #ba171c;");
+            productIsValid = false;
+        } else {
+            minTextField.setStyle(null);
+            maxTextField.setStyle(null);
+        }
+
+        // VALIDATE INVENTORY
+        if(minMaxValidation.isEmpty()) {
+            // VALIDATE INVENTORY
+            String invValidation = Validation.validateInventory(inventoryTextField.getText(), minTextField.getText(), maxTextField.getText());
+            if(!invValidation.isEmpty()) {
+                errors.append(invValidation);
+                errors.append("\n");
+                inventoryTextField.setStyle("-fx-border-color: #ba171c;");
+                productIsValid = false;
+            } else {
+                inventoryTextField.setStyle(null);
+            }
+        }
+
+        // VALIDATE TOTAL COST vs PRICE
+        if(productIsValid) {
+            double productTotalPrice = Validation.getRoundedPrice(priceCostTextField.getText());
+            double totalPartCost = 0;
+            for(Part part: partsToAddToProduct) {
+                totalPartCost += part.getPrice();
+            }
+            if(productTotalPrice < totalPartCost) { // modified product price is less than total part cost
+                errors.append("Total cost of parts in product exceeds cost of product.  Either raise price of product or remove parts.");
+                errors.append("\n");
+                errors.append("Total cost: ");
+                errors.append(totalPartCost);
+                priceCostTextField.setStyle("-fx-border-color: #ba171c;");
+                priceIsValid = false;
+            } else {
+                priceCostTextField.setStyle(null);
+            }
+            if(priceIsValid) {
+                saveProduct();
+                showMainScreen();
+            } else {
+                Alerts.warningAlert(errors.toString());
+            }
+        } else {
+            Alerts.warningAlert(errors.toString());
+        }
     }
 
     public void addPartToProductButtonPressed() {
@@ -106,10 +187,7 @@ public class ModifyProductController implements Initializable {
         ObservableList<Part> selectedRows = tableViewPartsToAdd.getSelectionModel().getSelectedItems();
         partsAvailable.addAll(selectedRows);
         partsToAddToProduct.removeAll(selectedRows);
-        /*for(Part part: selectedRows) {
-            partsToAddToProduct.remove(part);
-            partsAvailable.add(part);
-        }*/
+
         tableViewPartsToAdd.refresh();
         tableViewAvailableParts.refresh();
     }

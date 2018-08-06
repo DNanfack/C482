@@ -91,7 +91,7 @@
                                        <top>
                                           <HBox alignment="TOP_RIGHT" prefHeight="29.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#buttonClearPartsAvailableSearchPressed" text="X" />
+                                                <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonClearPartsAvailableSearchPressed" text="X" />
                                                 <TextField fx:id="textFieldAvailablePartsSearch" promptText="Part ID or Part Name" />
                                              </children>
                                              <padding>
@@ -102,7 +102,7 @@
                                        <bottom>
                                           <ButtonBar prefHeight="40.0" prefWidth="737.0" BorderPane.alignment="CENTER">
                                             <buttons>
-                                              <Button mnemonicParsing="false" onAction="#addPartToProductButtonPressed" text="Add" />
+                                              <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#addPartToProductButtonPressed" text="Add" />
                                             </buttons>
                                              <BorderPane.margin>
                                                 <Insets right="10.0" />
@@ -132,7 +132,7 @@
                                        <top>
                                           <HBox alignment="TOP_RIGHT" prefHeight="1.0" prefWidth="747.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#buttonClearPartsToAddSearchPressed" text="X" />
+                                                <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#buttonClearPartsToAddSearchPressed" text="X" />
                                                 <TextField fx:id="textFieldPartsToAddSearch" promptText="Part ID or Part Name" />
                                              </children>
                                              <padding>

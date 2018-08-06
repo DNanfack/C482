@@ -15,13 +15,12 @@ import java.io.IOException;
 
 public class Main extends Application {
     private Stage primaryStage;
-    public BorderPane rootLayout;
-    private Inventory inventory;
+    private BorderPane rootLayout; // The primary border pane that all other FXMLs sit inside
+    private Inventory inventory; // The inventory to be passed between controllers
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.inventory = new Inventory();
-        // generateDummyData();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("C482 Inventory Project");
         rootLayout = new BorderPane();
@@ -30,6 +29,9 @@ public class Main extends Application {
         showMainScreen("parts", inventory, rootLayout);
     }
 
+    /**
+     * Method to generate dummy data and add it to the program
+     */
     public void generateDummyData() {
         //<editor-fold desc="DummyDataCreation">
         // Add parts to product
@@ -50,7 +52,7 @@ public class Main extends Application {
         p2.setMax(20);
 
         Product p3 = new Product();
-        p3.setProductID(6);
+        p3.setProductID(99);
         p3.setInStock(6);
         p3.setName("TestProduct4");
         p3.setPrice(40.12);
@@ -143,27 +145,6 @@ public class Main extends Application {
         rootLayout.setCenter(mainScreen);
         // Select tab for TableView
         controller.selectTab(tabName);
-    }
-
-    /*public void showModifyPart(Part partToModify) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("View_Controller/ModifyPart.fxml"));
-        AnchorPane modifyPart = loader.load();
-        rootLayout.setCenter(modifyPart);
-
-        // Give controller access to part and main app.
-        ModifyPartController controller = new ModifyPartController(partToModify);
-        controller.setMain(this);
-    }*/
-
-    public void showAddProduct() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("View_Controller/AddProduct.fxml"));
-        AnchorPane addProduct = loader.load();
-        rootLayout.setCenter(addProduct);
-
-        // Give controller access to main
-        AddProductController controller = loader.getController();
     }
 
     public static void main(String[] args) {

@@ -1,3 +1,8 @@
+/*
+ * Author: Taylor Vories
+ * WGU C482 Project
+ */
+
 package C482.View_Controller;
 
 import C482.Main;
@@ -9,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,13 +38,22 @@ public class AddProductController implements Initializable {
     @FXML TableColumn columnAvailablePartsID, columnAvailablePartsName, columnAvailablePartsInventory, columnAvailablePartsPrice;
     @FXML TableColumn columnPartsToAddID, columnPartsToAddName, columnPartsToAddInventory, columnPartsToAddPrice;
 
-    public AddProductController(Inventory inventory, BorderPane rootLayout) {
+    /**
+     * Constructor.  Loads the controller with access to inventory and rootLayout
+     * @param inventory the project inventory
+     * @param rootLayout the rootLayout to place the different scenes inside
+     */
+    AddProductController(Inventory inventory, BorderPane rootLayout) {
         this.inventory = inventory;
         this.rootLayout = rootLayout;
         this.partsAvailable = FXCollections.observableArrayList(inventory.getParts());
         this.partsToAddToProduct = FXCollections.observableArrayList();
     }
 
+    /**
+     * Shows the main screen
+     * @throws IOException If FXML fails to load
+     */
     public void showMainScreen() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("View_Controller/MainScreen.fxml"));
@@ -52,6 +65,10 @@ public class AddProductController implements Initializable {
         controller.selectTab("products");
     }
 
+    /**
+     * Handles the cancel button being pressed. Returns to main screen without saving.
+     * @throws IOException If FXML fails to load
+     */
     public void cancelButtonPressed() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel add product?");
@@ -63,6 +80,10 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /**
+     * Creates a product to save to inventory once validation is complete.
+     * @return The product to add to inventory
+     */
     private Product saveProduct() {
         Product p = new Product();
         p.setName(productNameTextField.getText());
@@ -74,6 +95,10 @@ public class AddProductController implements Initializable {
         return p;
     }
 
+    /**
+     * Button handler
+     * @throws IOException If FXML fails to load
+     */
     public void saveButtonPressed() throws IOException {
         boolean productIsValid = true;
         boolean priceIsValid = true;
@@ -88,17 +113,6 @@ public class AddProductController implements Initializable {
             productIsValid = false;
         } else {
             productNameTextField.setStyle(null);
-        }
-
-        // VALIDATE INVENTORY
-        String invValidation = Validation.validateInventory(inventoryTextField.getText());
-        if(!invValidation.isEmpty()) {
-            errors.append(invValidation);
-            errors.append("\n");
-            inventoryTextField.setStyle("-fx-border-color: #ba171c;");
-            productIsValid = false;
-        } else {
-            inventoryTextField.setStyle(null);
         }
 
         // VALIDATE PRICE
@@ -123,6 +137,20 @@ public class AddProductController implements Initializable {
         } else {
             minTextField.setStyle(null);
             maxTextField.setStyle(null);
+        }
+
+        // VALIDATE INVENTORY
+        if(minMaxValidation.isEmpty()) {
+            // VALIDATE INVENTORY
+            String invValidation = Validation.validateInventory(inventoryTextField.getText(), minTextField.getText(), maxTextField.getText());
+            if(!invValidation.isEmpty()) {
+                errors.append(invValidation);
+                errors.append("\n");
+                inventoryTextField.setStyle("-fx-border-color: #ba171c;");
+                productIsValid = false;
+            } else {
+                inventoryTextField.setStyle(null);
+            }
         }
 
         // VALIDATE TOTAL COST vs PRICE
@@ -150,20 +178,22 @@ public class AddProductController implements Initializable {
         }
      }
 
-     public void addPartToProductButtonPressed() {
+    /**
+     * Handles the add part to product button.  Adds a part to the associated product list.
+     */
+    public void addPartToProductButtonPressed() {
         ObservableList<Part> selectedRows = tableViewAvailableParts.getSelectionModel().getSelectedItems();
         partsToAddToProduct.addAll(selectedRows);
         partsAvailable.removeAll(selectedRows);
 
-        /*for(Part part: selectedRows) {
-            partsAvailable.remove(part);
-            partsToAddToProduct.add(part);
-        }*/
         tableViewPartsToAdd.refresh();
         tableViewAvailableParts.refresh();
      }
 
-     public void removePartToProductButtonPressed() {
+    /**
+     * Handles the remove part button.  Removes a part from the associated product list.
+     */
+    public void removePartToProductButtonPressed() {
         ObservableList<Part> selectedRows = tableViewPartsToAdd.getSelectionModel().getSelectedItems();
         partsAvailable.addAll(selectedRows);
         partsToAddToProduct.removeAll(selectedRows);
@@ -175,7 +205,10 @@ public class AddProductController implements Initializable {
         tableViewAvailableParts.refresh();
      }
 
-     public void showAvailablePartsTableData() {
+    /**
+     * Shows table data when the scene loads.  Shows all parts that exist in inventory
+     */
+    public void showAvailablePartsTableData() {
          FilteredList<Part> filteredAvailableParts = new FilteredList<>(partsAvailable, p -> true);
          textFieldAvailablePartsSearch.textProperty().addListener((observable, oldValue, newValue) -> {
              filteredAvailableParts.setPredicate(part -> {
@@ -206,7 +239,10 @@ public class AddProductController implements Initializable {
          tableViewAvailableParts.setItems(sortedAvailableParts);
      }
 
-     public void showPartsToAddTableData() {
+    /**
+     * Shows table data when scene loads.  Shows parts to be added to associated product.
+     */
+    public void showPartsToAddTableData() {
          FilteredList<Part> filteredPartsToAdd = new FilteredList<>(partsToAddToProduct, p -> true);
          textFieldPartsToAddSearch.textProperty().addListener((observable, oldValue, newValue) -> {
              filteredPartsToAdd.setPredicate(part -> {
@@ -237,11 +273,17 @@ public class AddProductController implements Initializable {
          tableViewPartsToAdd.setItems(sortedPartsToAdd);
      }
 
-     public void buttonClearPartsAvailableSearchPressed() {
+    /**
+     * Clears search text field
+     */
+    public void buttonClearPartsAvailableSearchPressed() {
          textFieldAvailablePartsSearch.clear();
      }
 
-     public void buttonClearPartsToAddSearchPressed() {
+    /**
+     * Clears search text field
+     */
+    public void buttonClearPartsToAddSearchPressed() {
         textFieldPartsToAddSearch.clear();
      }
 
@@ -249,6 +291,7 @@ public class AddProductController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         tableViewPartsToAdd.setEditable(true);
         tableViewAvailableParts.setEditable(true);
+        // Sets table to be able to select multiple items
         tableViewPartsToAdd.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tableViewAvailableParts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         priceCostTextField.setTooltip(new Tooltip("Price will auto round to two decimal places."));

@@ -1,3 +1,8 @@
+/*
+ * Author: Taylor Vories
+ * WGU C482 Project
+ */
+
 package C482.Model;
 
 import javafx.beans.property.*;
@@ -19,6 +24,7 @@ public abstract class Part {
         this.max = new SimpleIntegerProperty();
     }
 
+    // Getters and setters
     public void setName(String name) {
         this.name.set(name);
     }

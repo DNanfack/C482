@@ -1,3 +1,8 @@
+/*
+ * Author: Taylor Vories
+ * WGU C482 Project
+ */
+
 package C482.Model;
 
 import javafx.beans.property.IntegerProperty;
@@ -14,10 +19,18 @@ public class InhousePart extends Part{
         this.machineID = new SimpleIntegerProperty();
     }
 
+    /**
+     * Setter
+     * @param machineID Integer ID.  Should be unique
+     */
     public void setMachineID(int machineID) {
         this.machineID.set(machineID);
     }
 
+    /**
+     * Getter
+     * @return returns machine ID
+     */
     public int getMachineID() {
         return this.machineID.getValue();
     }

@@ -1,9 +1,12 @@
+/*
+ * Author: Taylor Vories
+ * WGU C482 Project
+ */
+
 package C482.View_Controller;
 
 import C482.Main;
 import C482.Model.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,12 +16,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import C482.Model.Validation.*;
 
 public class AddPartController implements Initializable {
     private Inventory inventory;
@@ -39,12 +39,18 @@ public class AddPartController implements Initializable {
     /**
      * Constructor that passes inventory object to class.
      * @param inventory Inventory to manage.
+     * @param rootLayout The rootLayout provided by main.  Allows the class to change screens inside the same
+     *                   root layout.
      */
-    public AddPartController(Inventory inventory, BorderPane rootLayout) {
+    AddPartController(Inventory inventory, BorderPane rootLayout) {
         this.inventory = inventory;
         this.rootLayout = rootLayout;
     }
 
+    /**
+     * Shows the main screen
+     * @throws IOException If FXML is unable to load.
+     */
     private void showMainScreen() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("View_Controller/MainScreen.fxml"));
@@ -56,12 +62,19 @@ public class AddPartController implements Initializable {
         controller.selectTab("parts");
     }
 
+    /**
+     * Shows a text field specifically for an InHouse part
+     */
     public void showInHouseField() {
         optionalRowLabel.setText("Machine ID");
         optionalRowLabel.setVisible(true);
         optionalRowTextfield.setVisible(true);
         inHousePart = true;
     }
+
+    /**
+     * Shows a text field specifically for an OutsourcedPart
+     */
     public void showOutsourcedField() {
         optionalRowLabel.setText("Company Name");
         optionalRowLabel.setVisible(true);
@@ -69,6 +82,10 @@ public class AddPartController implements Initializable {
         inHousePart = false;
     }
 
+    /**
+     * If the user selects cancel, it exits the screen without saving.
+     * @throws IOException If FXML fails to load
+     */
     public void cancelButtonPressed() throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel add part?");
@@ -80,6 +97,10 @@ public class AddPartController implements Initializable {
         }
     }
 
+    /**
+     * Saves the part from the values provided by the user interface.
+     * @return Returns a part to be added to inventory.
+     */
     private Part savePart() {
         if(inHousePart) {
             InhousePart p = new InhousePart();
@@ -103,10 +124,15 @@ public class AddPartController implements Initializable {
         }
     }
 
+    /**
+     * When a user clicks the save button it validates the input is good and saves the part to the inventory.
+     * @throws IOException If FXML fails to load
+     */
     public void saveButtonPressed() throws IOException {
         boolean partIsValid = true;
         StringBuilder errors = new StringBuilder();
-        // if any fields are empty, underline field.
+
+        // Validate name
         String nameValidation = Validation.validateName(partNameTextField.getText());
         if(!nameValidation.isEmpty()) {
             errors.append(nameValidation);
@@ -117,17 +143,7 @@ public class AddPartController implements Initializable {
             partNameTextField.setStyle(null);
         }
 
-        // Validate inventory number
-        String invValidation = Validation.validateInventory(inventoryTextField.getText());
-        if(!invValidation.isEmpty()) {
-            errors.append(invValidation);
-            errors.append("\n");
-            inventoryTextField.setStyle("-fx-border-color: #ba171c;");
-            partIsValid = false;
-        } else {
-            inventoryTextField.setStyle(null);
-        }
-
+        // Validate price
         String priceValidation = Validation.validatePrice(priceCostTextField.getText());
         if(!priceValidation.isEmpty()) {
             errors.append(priceValidation);
@@ -138,6 +154,7 @@ public class AddPartController implements Initializable {
             priceCostTextField.setStyle(null);
         }
 
+        // Validate min/max values
         String minMaxValidation = Validation.validateMinMax(minTextField.getText(), maxTextField.getText());
         if(!minMaxValidation.isEmpty()) {
             errors.append(minMaxValidation);
@@ -150,6 +167,20 @@ public class AddPartController implements Initializable {
             maxTextField.setStyle(null);
         }
 
+        // Validate inventory number
+        if(minMaxValidation.isEmpty()) {
+            String invValidation = Validation.validateInventory(inventoryTextField.getText(), minTextField.getText(), maxTextField.getText());
+            if(!invValidation.isEmpty()) {
+                errors.append(invValidation);
+                errors.append("\n");
+                inventoryTextField.setStyle("-fx-border-color: #ba171c;");
+                partIsValid = false;
+            } else {
+                inventoryTextField.setStyle(null);
+            }
+        }
+
+        // Logic for InHouse parts
         if(inHousePart) {
             if(!Validation.intValid(optionalRowTextfield.getText())) {
                 errors.append("Machine ID must be a valid integer.");
@@ -159,7 +190,7 @@ public class AddPartController implements Initializable {
             } else {
                 optionalRowTextfield.setStyle(null);
             }
-        } else {
+        } else { // Logic for Outsourced parts
             String validateCompanyName = Validation.validateName(optionalRowTextfield.getText());
             if(!validateCompanyName.isEmpty()) {
                 errors.append(validateCompanyName);
@@ -170,13 +201,13 @@ public class AddPartController implements Initializable {
                 optionalRowTextfield.setStyle(null);
             }
         }
-        if(partIsValid) {
+        if(partIsValid) { // input passed all validation
             Part partToSave = savePart();
             // Get partID from inventory
             partToSave.setPartID(inventory.getPartID());
             inventory.addPart(partToSave);
             showMainScreen();
-        } else {
+        } else { // input was invalid
             Alerts.warningAlert(errors.toString());
         }
     }
@@ -185,8 +216,11 @@ public class AddPartController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         optionalRowLabel.setVisible(false);
         optionalRowTextfield.setVisible(false);
+        // Tooltip to let the user know the price will be rounded to 2 decimal places.
         priceCostTextField.setTooltip(new Tooltip("Price will auto round to two decimal places."));
+        // Defaults to InHouse part
         inHouseRadio.fire();
+        // Listener for radio buttons
         addPartRadioGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
             if(addPartRadioGroup.selectedToggleProperty() != null) {
                 if(inHouseRadio.isSelected()) {
