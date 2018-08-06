@@ -73,7 +73,11 @@ public class Product {
      * @return Returns Part if found, otherwise returns null
      */
     public Part lookupAssociatedPart(int partID) {
-        //TODO: Write Method
+        for(Part part: associatedParts) {
+            if(part.getPartID() == partID) {
+                return part;
+            }
+        }
         return null;
     }
 
